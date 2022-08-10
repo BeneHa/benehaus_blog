@@ -69,4 +69,6 @@ This will build the Jekyll page and deploy the folder with the built website cod
     description="Triggering a Github action"
     alt="Github action" %}
 
+Check the results by going to the website at the URL you saw before when setting up the Static Webpage for the Blob storage.
+
 ## CDN refresh

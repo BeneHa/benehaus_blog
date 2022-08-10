@@ -23,7 +23,7 @@ jobs:
         target_path: '_site'
     - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
       with:
-        source_dir: 'jekyll/_site'
+        source_dir: '_site'
         container_name: $web
         sas_token: ${{ secrets.sas_token }}
         account_name: ${{ secrets.storage_account_name }} 
