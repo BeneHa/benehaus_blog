@@ -30,14 +30,14 @@ Now we want our website to be deployed to this storage account. Got to Github, c
 - STORAGE_ACCOUNT_NAME is the name of the storage account you created
 - SAS_TOKEN: In the Azure portal, got to you storage account and "Shared access signature". Create a token with write permissions to the Blob service and Container resource type that is valid for a year
 
-Now create a  file defining the Github Action workflow:
+Now create a  file defining the Github Action workflow in .github/workflows/main.yml:
 ```
 name: Build and deploy Jekyll site to Azure Blob static page
 
 on:
   push:
     branches:
-      - '**'
+      - 'main'
 
 jobs:
   jekyll:
@@ -47,7 +47,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/jekyll/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
     # Standard usage
@@ -62,7 +62,7 @@ jobs:
         sync: true
 ```
 
-This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web.
+This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch.
 
 
 
