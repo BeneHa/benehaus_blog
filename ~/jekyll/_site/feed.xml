@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-08-10T20:00:13+00:00</updated><id>/feed.xml</id><title type="html">bene.haus</title><subtitle>Personal blog of Benedikt Häuser</subtitle><entry><title type="html">Blog Setup</title><link href="/blog-setup/" rel="alternate" type="text/html" title="Blog Setup" /><published>2022-08-08T00:00:00+00:00</published><updated>2022-08-08T00:00:00+00:00</updated><id>/blog-setup</id><content type="html" xml:base="/blog-setup/">&lt;h2 id=&quot;jekyll&quot;&gt;Jekyll&lt;/h2&gt;
+
+&lt;h2 id=&quot;azure-portal---storage-account&quot;&gt;Azure Portal - Storage account&lt;/h2&gt;
+
+&lt;p&gt;Next, let’s head over to portal.azure.com and create some resources there. I am assuming you have a subscription with a payment method set up. First, we create a Resource Group by searching for “Resource Group” in the top search bar, clicking on it, then on “Create” and then we enter the desired name and location:&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-12-blog-setup/3_azure_create_rg.png&quot; alt=&quot;Azure resource group&quot; /&gt;
+    &lt;figcaption&gt;Creating a resource group in the Azure portal&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;We will put all necessary resources into this resource group. Let’s create the first one right away. Select the resource group, click on “Create resource” and search for “storage account”. Click on the search result and create it. Here you have some more options. Select a name, location and locally redundant storage (this is enough for a non-critical use case like a website) and create it:&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-12-blog-setup/4_azure_create_storage.png&quot; alt=&quot;Azure storage account&quot; /&gt;
+    &lt;figcaption&gt;Creating the storage account&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;On the Blob storage, click on “Static website” in the menu and set it to Enabled. Enter “index.html” and “404.html” for the required documents and click on save. You can now see your primary endpoint which will look something like https://blobname.z1.web.core.windows.net. Your website can now be reached at that URL if you put a index.html file into the container “$web” that was created automatically.&lt;/p&gt;
+
+&lt;h2 id=&quot;github---deploy-website&quot;&gt;Github - deploy website&lt;/h2&gt;
+
+&lt;p&gt;Now we want our website to be deployed to this storage account. Got to Github, create a repository and push you code. Now, head to the settings of your repository and go to Secrets -&amp;gt; Actions. Create new repository secrets:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;STORAGE_ACCOUNT_NAME is the name of the storage account you created&lt;/li&gt;
+  &lt;li&gt;SAS_TOKEN: In the Azure portal, got to you storage account and “Shared access signature”. Create a token with write permissions to the Blob service and Container resource type that is valid for a year&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now create a  file defining the Github Action workflow in .github/workflows/main.yml:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;name: Build and deploy Jekyll site to Azure Blob static page
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: $-gems-$
+        restore-keys: |
+          $-gems-
+    # Standard usage
+    - uses: lemonarc/jekyll-action@1.0.0
+    - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+      with:
+        source_dir: '_site'
+        container_name: $web
+        sas_token: $
+        account_name: $ 
+        extra_args: --overwrite True
+        sync: true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch.&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-12-blog-setup/5_github_action.png&quot; alt=&quot;Github action&quot; /&gt;
+    &lt;figcaption&gt;Triggering a Github action&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Check the results by going to the website at the URL you saw before when setting up the Static Webpage for the Blob storage.&lt;/p&gt;
+
+&lt;p&gt;Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done.&lt;br /&gt;
+What we want to change now is the url where the website can be accessed (it still has the ugly long name with .core.windows.net in it).&lt;/p&gt;
+
+&lt;h2 id=&quot;azure-portal---cdn-endpoint&quot;&gt;Azure Portal - CDN endpoint&lt;/h2&gt;
+
+&lt;p&gt;Let’s go back to the Azure portal and create a CDN endpoint. Add a resource and search for “Front Door and CDN profiles”. Select “Explore other offerings” and “Azure CDN Standard”. Again, define a name and click on “Create”.&lt;/p&gt;
+
+&lt;h2 id=&quot;namecheap&quot;&gt;Namecheap&lt;/h2&gt;
+
+&lt;p&gt;So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene.haus:&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-12-blog-setup/1_namecheap_search.png&quot; alt=&quot;Namecheap domains&quot; /&gt;
+    &lt;figcaption&gt;Depending on the URL ending, you can pay a few euros or several thousand per year&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;After the checkout, the domain can be seen in the list of your domains. Click on “Manage” to got to the settings.&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-12-blog-setup/2_namecheap_domain_list.png&quot; alt=&quot;Namecheap domains&quot; /&gt;
+    &lt;figcaption&gt;List of namecheap domains&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;cdn-refresh&quot;&gt;CDN refresh&lt;/h2&gt;</content><author><name></name></author><summary type="html">Jekyll Azure Portal - Storage account Next, let’s head over to portal.azure.com and create some resources there. I am assuming you have a subscription with a payment method set up. First, we create a Resource Group by searching for “Resource Group” in the top search bar, clicking on it, then on “Create” and then we enter the desired name and location: Creating a resource group in the Azure portal We will put all necessary resources into this resource group. Let’s create the first one right away. Select the resource group, click on “Create resource” and search for “storage account”. Click on the search result and create it. Here you have some more options. Select a name, location and locally redundant storage (this is enough for a non-critical use case like a website) and create it: Creating the storage account On the Blob storage, click on “Static website” in the menu and set it to Enabled. Enter “index.html” and “404.html” for the required documents and click on save. You can now see your primary endpoint which will look something like https://blobname.z1.web.core.windows.net. Your website can now be reached at that URL if you put a index.html file into the container “$web” that was created automatically. Github - deploy website Now we want our website to be deployed to this storage account. Got to Github, create a repository and push you code. Now, head to the settings of your repository and go to Secrets -&amp;gt; Actions. Create new repository secrets: STORAGE_ACCOUNT_NAME is the name of the storage account you created SAS_TOKEN: In the Azure portal, got to you storage account and “Shared access signature”. Create a token with write permissions to the Blob service and Container resource type that is valid for a year Now create a file defining the Github Action workflow in .github/workflows/main.yml: name: Build and deploy Jekyll site to Azure Blob static page on: push: branches: - 'main' jobs: jekyll: runs-on: ubuntu-20.04 steps: - uses: actions/checkout@v2 - uses: actions/cache@v1 with: path: vendor/bundle key: $-gems-$ restore-keys: | $-gems- # Standard usage - uses: lemonarc/jekyll-action@1.0.0 - uses: bacongobbler/azure-blob-storage-upload@v1.2.0 with: source_dir: '_site' container_name: $web sas_token: $ account_name: $ extra_args: --overwrite True sync: true This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch. Triggering a Github action Check the results by going to the website at the URL you saw before when setting up the Static Webpage for the Blob storage. Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done. What we want to change now is the url where the website can be accessed (it still has the ugly long name with .core.windows.net in it). Azure Portal - CDN endpoint Let’s go back to the Azure portal and create a CDN endpoint. Add a resource and search for “Front Door and CDN profiles”. Select “Explore other offerings” and “Azure CDN Standard”. Again, define a name and click on “Create”. Namecheap So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene.haus: Depending on the URL ending, you can pay a few euros or several thousand per year After the checkout, the domain can be seen in the list of your domains. Click on “Manage” to got to the settings. List of namecheap domains CDN refresh</summary></entry><entry><title type="html">Experiences travelling by train in Europe</title><link href="/train-travel-europe/" rel="alternate" type="text/html" title="Experiences travelling by train in Europe" /><published>2022-08-05T00:00:00+00:00</published><updated>2022-08-05T00:00:00+00:00</updated><id>/train-travel-europe</id><content type="html" xml:base="/train-travel-europe/">&lt;p&gt;The climate crisis is getting more obvious by the day and everybody should think of his or her part in it and how to reduce their carbon footprint. On the other hand, nobody wants to sit at home all day not doing anything in order to have the lowest possible CO2 emissions, so for many activities we have to find alternatives producing fewer emissions.&lt;/p&gt;
+
+&lt;p&gt;One obvious fossil powered industry is airplane travel. There will not be any battery- or hydrogen-powered alternatives available in a large quantity within the next 15 to 20 years, so the best alternative is to switch to another mode of travel altogether. If you do not want to drive in your own car, this leaves the bus and the train. When searching for a travel destination for this summer, I took this into account and decided on Scotland, a country I had never been to and which looked like it would be reachable by train in a decent amount of train.&lt;/p&gt;
+
+&lt;p&gt;I want to share my experience with this train journey with you in this blog post.&lt;/p&gt;
+
+&lt;p&gt;First, the route:
+From Munich to Paris, we took the TGV. It stops 5 times on the way and takes about 6 and a half hours.&lt;br /&gt;
+From Paris to London, we took the Eurostar (I think this is the only operator for this route). This takes 2 and a half hours plus one hour time zone difference and does not have any stops on the way.&lt;br /&gt;
+From London to Edinburgh, we took the Scottish/British railway (LNER). Again around 6 hours with a few stops.&lt;br /&gt;
+The route on the way back was the same, but we took a one day break in London.&lt;/p&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-06-train-travel/train_route.png&quot; alt=&quot;Train route Munich - Edinburgh&quot; /&gt;
+    &lt;figcaption&gt;For our travel dates, going via Paris was the best connection, but you can also go via Bruxelles.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;So, are the Pros and Cons of going by train instead of by plane? Here is my personal list:&lt;/p&gt;
+
+&lt;p&gt;Pro:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;CO2 footprint is much smaller&lt;/li&gt;
+  &lt;li&gt;Check-in: For trains not crossing the EU border, you just get to the train station and get in the train. No passport check, luggage control etc.&lt;/li&gt;
+  &lt;li&gt;Crossing EU border: this happens in the train station in Paris (and London for the way back). Passport controls and luggage checks took around 10 minutes, also the luggage checks were quite simple (no unpacking of electronics etc.)&lt;/li&gt;
+  &lt;li&gt;Luggage: No restrictions for size, weight or what you can take on the train&lt;/li&gt;
+  &lt;li&gt;Locations: all train stations are in the heart of the cities, while airports are far outside. When changing trains in Paris, we had lunch in a street cafe which is way better than sitting around in an airport transit area&lt;/li&gt;
+  &lt;li&gt;Comfort: I find sitting in the train and stretching our legs on the way to the restaurant wagon preferable to sitting in an airplane&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Neutral:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Changes: You have to change trains more often then you would change planes. But the changes were nice, spending some time in the cities&lt;/li&gt;
+  &lt;li&gt;Delays: we were lucky and had no issues, we only had to hurry a bit on the way back when changing trains in Paris. But you can have bad luck here with all methods of travel, airplane reliability in Europe 2022 was quite bad from what I read in the news&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Negative:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Cost: Nothing comes close to the cheap airplane tickets&lt;/li&gt;
+  &lt;li&gt;Duration: It also takes much longer to go by train, even if the TGV speeds up to about 320 km/h&lt;/li&gt;
+  &lt;li&gt;Entertainment: There is no lounge and onboard entertainment, but I do not like to watch movies on what feels like a 11 inch 480p screen anyway&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;image&quot;&gt;
+    &lt;img src=&quot;/assets/images/blogposts/2022-08-06-train-travel/airport_situation.jpeg&quot; alt=&quot;Airport chaos&quot; /&gt;
+    &lt;figcaption&gt;Summer 2022 was not a great time for airplane travel in Europe.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;So, to sum it up: yes, not everyone is able to afford the more expensive tickets and it takes some degree of idealism to go by train. Still, I was surprised how simple and comfortable the journey was. I hope the train network will keep getting expanded, more overnight connections will be established and that this will also be a valid method of travel for people with smaller budgets and people who do not live in the well connected big cities.&lt;/p&gt;</content><author><name>Benedikt</name></author><category term="sticky" /><summary type="html">The climate crisis is getting more obvious by the day and everybody should think of his or her part in it and how to reduce their carbon footprint. On the other hand, nobody wants to sit at home all day not doing anything in order to have the lowest possible CO2 emissions, so for many activities we have to find alternatives producing fewer emissions. One obvious fossil powered industry is airplane travel. There will not be any battery- or hydrogen-powered alternatives available in a large quantity within the next 15 to 20 years, so the best alternative is to switch to another mode of travel altogether. If you do not want to drive in your own car, this leaves the bus and the train. When searching for a travel destination for this summer, I took this into account and decided on Scotland, a country I had never been to and which looked like it would be reachable by train in a decent amount of train. I want to share my experience with this train journey with you in this blog post. First, the route: From Munich to Paris, we took the TGV. It stops 5 times on the way and takes about 6 and a half hours. From Paris to London, we took the Eurostar (I think this is the only operator for this route). This takes 2 and a half hours plus one hour time zone difference and does not have any stops on the way. From London to Edinburgh, we took the Scottish/British railway (LNER). Again around 6 hours with a few stops. The route on the way back was the same, but we took a one day break in London. For our travel dates, going via Paris was the best connection, but you can also go via Bruxelles. So, are the Pros and Cons of going by train instead of by plane? Here is my personal list: Pro: CO2 footprint is much smaller Check-in: For trains not crossing the EU border, you just get to the train station and get in the train. No passport check, luggage control etc. Crossing EU border: this happens in the train station in Paris (and London for the way back). Passport controls and luggage checks took around 10 minutes, also the luggage checks were quite simple (no unpacking of electronics etc.) Luggage: No restrictions for size, weight or what you can take on the train Locations: all train stations are in the heart of the cities, while airports are far outside. When changing trains in Paris, we had lunch in a street cafe which is way better than sitting around in an airport transit area Comfort: I find sitting in the train and stretching our legs on the way to the restaurant wagon preferable to sitting in an airplane Neutral: Changes: You have to change trains more often then you would change planes. But the changes were nice, spending some time in the cities Delays: we were lucky and had no issues, we only had to hurry a bit on the way back when changing trains in Paris. But you can have bad luck here with all methods of travel, airplane reliability in Europe 2022 was quite bad from what I read in the news Negative: Cost: Nothing comes close to the cheap airplane tickets Duration: It also takes much longer to go by train, even if the TGV speeds up to about 320 km/h Entertainment: There is no lounge and onboard entertainment, but I do not like to watch movies on what feels like a 11 inch 480p screen anyway Summer 2022 was not a great time for airplane travel in Europe. So, to sum it up: yes, not everyone is able to afford the more expensive tickets and it takes some degree of idealism to go by train. Still, I was surprised how simple and comfortable the journey was. I hope the train network will keep getting expanded, more overnight connections will be established and that this will also be a valid method of travel for people with smaller budgets and people who do not live in the well connected big cities.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/blogposts/2022-08-06-train-travel/train_route.png" /></entry><entry><title type="html">Welcome</title><link href="/welcome/" rel="alternate" type="text/html" title="Welcome" /><published>2022-08-01T00:00:00+00:00</published><updated>2022-08-01T00:00:00+00:00</updated><id>/welcome</id><content type="html" xml:base="/welcome/">&lt;p&gt;Welcome to my blog.&lt;br /&gt;
+This blog is still work in progress - if you see anything not working or looking weird, I would be happy if you let me know :) . 
+I will write on here about whatever interests me, probably mostly technology related. We will see!&lt;/p&gt;</content><author><name></name></author><summary type="html">Welcome to my blog. This blog is still work in progress - if you see anything not working or looking weird, I would be happy if you let me know :) . I will write on here about whatever interests me, probably mostly technology related. We will see!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/logo/300.png" /></entry></feed>

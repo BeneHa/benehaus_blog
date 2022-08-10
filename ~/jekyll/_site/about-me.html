@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About me | bene.haus</title>
+
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>About me | bene.haus</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="About me" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Personal blog of Benedikt Häuser" />
+<meta property="og:description" content="Personal blog of Benedikt Häuser" />
+<meta property="og:site_name" content="bene.haus" />
+<script type="application/ld+json">
+{"description":"Personal blog of Benedikt Häuser","headline":"About me","url":"/about-me.html","@type":"WebPage","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/images/logo.png"}},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet">
+
+    <!-- Bootstrap Modified -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/theme.css">
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/custom.css"> 
+
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/cv.css"> 
+
+    <!-- Jquery on header to make sure everything works, the rest  of the scripts in footer for fast loading -->
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+        <!-- Navbar -->
+    <nav id="MagicMenu" class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
+        <div class="container" style="height:10vh">
+
+            <a href="/index.html"><img src="/assets/images/logo/300.png" alt="Home button" style="width:9vh;height:9vh;"></a>
+
+            <div class="navbar nav-scale" style="width: 30vw" >
+                <ul class="navbar-nav mr-auto d-flex align-items-center" style="width: 50%">
+                   <li class="nav-item">
+<a class="nav-link" href="/about-me.html">About me</a>
+</li>
+                </ul>
+                <ul class="navbar-nav ml-auto d-flex align-items-center" style="width: 50%">
+                    <script src="/assets/js/lunr.js"></script>
+
+<script>
+$(function() {
+    $("#lunrsearchresults").on('click', '#btnx', function () {
+        $('#lunrsearchresults').hide( 1000 );
+        $( "body" ).removeClass( "modal-open" );
+    });
+});
+    
+
+var documents = [{
+    "id": 0,
+    "url": "/404/",
+    "title": "",
+    "body": " 404 Page not found :(  The requested page could not be found. "
+    }, {
+    "id": 1,
+    "url": "/about-me.html",
+    "title": "About me",
+    "body": "             Career Profile :    I a am Munich-based IT Consultant specializing in Data Engineering in Azure. With more than5 years of experience across different industries I have a good overview of typicaluse cases, challenges and how to solve them. In my free time I like to be outdoors, read, learn some new technology or play video games. On this blog I write whatever comes to my mind, I am not sure yet how often I will write something here.                 Experiences :            (Senior) Consultant Data Engineer:     2020 - Present      b. telligent, Munich         Implementing Cloud Data Platforms in Azure, including infrastructure, data pipelines, monitoring, CI/CD and Data Warehouse structures. Client industries include  Medicine technology Retail Automotive services                Data Analyst:     2017 - 2020      Daimler AG, Stuttgart         Data Science proof of concepts regarding spare part price behavior and price definition. Azure Data Platform setup, implementation and optimization of Databricks jobs for dataprocessing in PySpark.                 Master thesis:     2017      Continental, Hannover         Analyze onboard vehicle telemetry data in R and enrich it with Open Datafor better understanding of vehicle driving patterns and environment conditions.                    Projects :      In my free time I try to do something interesting and worthwile.                 Cooperative Rieselbar             - We try to open a zero packaging store in the north of Munich.                    Skills &amp; Proficiency :         Azure:                        Snowflake:                        Databricks / Spark:                        Python:                        Terraform:                        DevOps:                        Kafka:                    "
+    }, {
+    "id": 2,
+    "url": "/categories.html",
+    "title": "Categories",
+    "body": "          Categories          {% for category in site. categories %}     {{ category[0] }}:           {% assign pages_list = category[1] %}    {% for post in pages_list %}    {% if post. title != null %}     {% if group == null or group == post. group %}           {% include main-loop-card. html %}     {% endif %}    {% endif %}    {% endfor %}    {% assign pages_list = nil %}    {% assign group = nil %}    {% endfor %}          "
+    }, {
+    "id": 3,
+    "url": "/",
+    "title": "home",
+    "body": "{% if page. url ==  /  %}          {% assign latest_post = site. posts[0] %}          &lt;div class= topfirstimage  style= background-image: url({% if latest_post. image contains  ://  %}{{ latest_post. image }}{% else %} {{site. baseurl}}/{{ latest_post. image}}{% endif %}); height: 200px;  background-size: cover;  background-repeat: no-repeat; &gt;&lt;/div&gt;           {{ latest_post. title }}  :       {{ latest_post. excerpt | strip_html | strip_newlines | truncate: 136 }}               In         {% for category in latest_post. categories %}        {{ category }},         {% endfor %}                                {{ latest_post. date | date: '%b %d, %Y' }}                            {%- assign second_post = site. posts[1] -%}                        {% if second_post. image %}                         &lt;img class= w-100  src= {% if second_post. image contains  ://  %}{{ second_post. image }}{% else %}{{ second_post. image | absolute_url }}{% endif %}  alt= {{ second_post. title }} &gt;                        {% endif %}                                    {{ second_post. title }}          :                       In             {% for category in second_post. categories %}            {{ category }},             {% endfor %}                                                      {{ second_post. date | date: '%b %d, %Y' }}                                    {%- assign third_post = site. posts[2] -%}                        {% if third_post. image %}                         &lt;img class= w-100  src= {% if third_post. image contains  ://  %}{{ third_post. image }}{% else %}{{site. baseurl}}/{{ third_post. image }}{% endif %}  alt= {{ third_post. title }} &gt;                        {% endif %}                                    {{ third_post. title }}          :                       In             {% for category in third_post. categories %}            {{ category }},             {% endfor %}                                                      {{ third_post. date | date: '%b %d, %Y' }}                                    {%- assign fourth_post = site. posts[3] -%}                        {% if fourth_post. image %}                        &lt;img class= w-100  src= {% if fourth_post. image contains  ://  %}{{ fourth_post. image }}{% else %}{{site. baseurl}}/{{ fourth_post. image }}{% endif %}  alt= {{ fourth_post. title }} &gt;                        {% endif %}                                    {{ fourth_post. title }}          :                       In             {% for category in fourth_post. categories %}            {{ category }},             {% endfor %}                                                      {{ fourth_post. date | date: '%b %d, %Y' }}                                  {% for post in site. posts %} {% if post. tags contains  sticky  %}                    {{post. title}}                  {{ post. excerpt | strip_html | strip_newlines | truncate: 136 }}                 Read More            	             {% endif %}{% endfor %}  {% endif %}                All Stories:         {% for post in paginator. posts %}          {% include main-loop-card. html %}        {% endfor %}                   {% if paginator. total_pages &gt; 1 %}              {% if paginator. previous_page %}        &laquo; Prev       {% else %}        &laquo;       {% endif %}       {% for page in (1. . paginator. total_pages) %}        {% if page == paginator. page %}        {{ page }}        {% elsif page == 1 %}        {{ page }}        {% else %}        {{ page }}        {% endif %}       {% endfor %}       {% if paginator. next_page %}        Next &raquo;       {% else %}        &raquo;       {% endif %}            {% endif %}               "
+    }, {
+    "id": 4,
+    "url": "/privacy-policy.html",
+    "title": "Privacy Policy",
+    "body": "”{{site. name}}” takes your privacy seriously. To better protect your privacy we provide this privacy policy notice explaining the way your personal information is collected and used. Collection of Routine Information: This website track basic information about their visitors. This information includes, but is not limited to, IP addresses, browser details, timestamps and referring pages. None of this information can personally identify specific visitor to this website. The information is tracked for routine administration and maintenance purposes. Cookies: Where necessary, this website uses cookies to store information about a visitor’s preferences and history in order to better serve the visitor and/or present the visitor with customized content. Advertisement and Other Third Parties: Advertising partners and other third parties may use cookies, scripts and/or web beacons to track visitor activities on this website in order to display advertisements and other useful information. Such tracking is done directly by the third parties through their own servers and is subject to their own privacy policies. This website has no access or control over these cookies, scripts and/or web beacons that may be used by third parties. Learn how to opt out of Google’s cookie usage. Links to Third Party Websites: We have included links on this website for your use and reference. We are not responsible for the privacy policies on these websites. You should be aware that the privacy policies of these websites may differ from our own. Security: The security of your personal information is important to us, but remember that no method of transmission over the Internet, or method of electronic storage, is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security. Changes To This Privacy Policy: This Privacy Policy is effective and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page. We reserve the right to update or change our Privacy Policy at any time and you should check this Privacy Policy periodically. If we make any material changes to this Privacy Policy, we will notify you either through the email address you have provided us, or by placing a prominent notice on our website. Contact Information: For any questions or concerns regarding the privacy policy, please contact us here. "
+    }, {
+    "id": 5,
+    "url": "/tags.html",
+    "title": "Tags",
+    "body": "          Tags          {% for tag in site. tags %}     {{ tag[0] }}:           {% assign pages_list = tag[1] %}    {% for post in pages_list %}    {% if post. title != null %}     {% if group == null or group == post. group %}           {% include main-loop-card. html %}     {% endif %}    {% endif %}    {% endfor %}    {% assign pages_list = nil %}    {% assign group = nil %}    {% endfor %}          "
+    }, {
+    "id": 6,
+    "url": "/robots.txt",
+    "title": "",
+    "body": "      Sitemap: {{ “sitemap. xml”   absolute_url }}   "
+    }, {
+    "id": 7,
+    "url": "/blog-setup/",
+    "title": "Blog Setup",
+    "body": "2022/08/08 - Jekyll: Azure Portal - Storage account: Next, let’s head over to portal. azure. com and create some resources there. I am assuming you have a subscription with a payment method set up. First, we create a Resource Group by searching for “Resource Group” in the top search bar, clicking on it, then on “Create” and then we enter the desired name and location:     Creating a resource group in the Azure portalWe will put all necessary resources into this resource group. Let’s create the first one right away. Select the resource group, click on “Create resource” and search for “storage account”. Click on the search result and create it. Here you have some more options. Select a name, location and locally redundant storage (this is enough for a non-critical use case like a website) and create it:     Creating the storage accountOn the Blob storage, click on “Static website” in the menu and set it to Enabled. Enter “index. html” and “404. html” for the required documents and click on save. You can now see your primary endpoint which will look something like https://blobname. z1. web. core. windows. net. Your website can now be reached at that URL if you put a index. html file into the container “$web” that was created automatically. Github - deploy website: Now we want our website to be deployed to this storage account. Got to Github, create a repository and push you code. Now, head to the settings of your repository and go to Secrets -&gt; Actions. Create new repository secrets:  STORAGE_ACCOUNT_NAME is the name of the storage account you created SAS_TOKEN: In the Azure portal, got to you storage account and “Shared access signature”. Create a token with write permissions to the Blob service and Container resource type that is valid for a yearNow create a file defining the Github Action workflow in . github/workflows/main. yml: name: Build and deploy Jekyll site to Azure Blob static pageon: push:  branches:   - 'main'jobs: jekyll:  runs-on: ubuntu-20. 04  steps:  - uses: actions/checkout@v2  - uses: actions/cache@v1   with:    path: vendor/bundle    key: $-gems-$    restore-keys: |     $-gems-  # Standard usage  - uses: lemonarc/jekyll-action@1. 0. 0  - uses: bacongobbler/azure-blob-storage-upload@v1. 2. 0   with:    source_dir: '_site'    container_name: $web    sas_token: $    account_name: $     extra_args: --overwrite True    sync: trueThis will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch.     Triggering a Github actionCheck the results by going to the website at the URL you saw before when setting up the Static Webpage for the Blob storage. Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done. What we want to change now is the url where the website can be accessed (it still has the ugly long name with . core. windows. net in it). Azure Portal - CDN endpoint: Let’s go back to the Azure portal and create a CDN endpoint. Add a resource and search for “Front Door and CDN profiles”. Select “Explore other offerings” and “Azure CDN Standard”. Again, define a name and click on “Create”. Namecheap: So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene. haus:     Depending on the URL ending, you can pay a few euros or several thousand per yearAfter the checkout, the domain can be seen in the list of your domains. Click on “Manage” to got to the settings.     List of namecheap domainsCDN refresh: "
+    }, {
+    "id": 8,
+    "url": "/train-travel-europe/",
+    "title": "Experiences travelling by train in Europe",
+    "body": "2022/08/05 - The climate crisis is getting more obvious by the day and everybody should think of his or her part in it and how to reduce their carbon footprint. On the other hand, nobody wants to sit at home all day not doing anything in order to have the lowest possible CO2 emissions, so for many activities we have to find alternatives producing fewer emissions. One obvious fossil powered industry is airplane travel. There will not be any battery- or hydrogen-powered alternatives available in a large quantity within the next 15 to 20 years, so the best alternative is to switch to another mode of travel altogether. If you do not want to drive in your own car, this leaves the bus and the train. When searching for a travel destination for this summer, I took this into account and decided on Scotland, a country I had never been to and which looked like it would be reachable by train in a decent amount of train. I want to share my experience with this train journey with you in this blog post. First, the route:From Munich to Paris, we took the TGV. It stops 5 times on the way and takes about 6 and a half hours. From Paris to London, we took the Eurostar (I think this is the only operator for this route). This takes 2 and a half hours plus one hour time zone difference and does not have any stops on the way. From London to Edinburgh, we took the Scottish/British railway (LNER). Again around 6 hours with a few stops. The route on the way back was the same, but we took a one day break in London.     For our travel dates, going via Paris was the best connection, but you can also go via Bruxelles. So, are the Pros and Cons of going by train instead of by plane? Here is my personal list: Pro:  CO2 footprint is much smaller Check-in: For trains not crossing the EU border, you just get to the train station and get in the train. No passport check, luggage control etc.  Crossing EU border: this happens in the train station in Paris (and London for the way back). Passport controls and luggage checks took around 10 minutes, also the luggage checks were quite simple (no unpacking of electronics etc. ) Luggage: No restrictions for size, weight or what you can take on the train Locations: all train stations are in the heart of the cities, while airports are far outside. When changing trains in Paris, we had lunch in a street cafe which is way better than sitting around in an airport transit area Comfort: I find sitting in the train and stretching our legs on the way to the restaurant wagon preferable to sitting in an airplaneNeutral:  Changes: You have to change trains more often then you would change planes. But the changes were nice, spending some time in the cities Delays: we were lucky and had no issues, we only had to hurry a bit on the way back when changing trains in Paris. But you can have bad luck here with all methods of travel, airplane reliability in Europe 2022 was quite bad from what I read in the newsNegative:  Cost: Nothing comes close to the cheap airplane tickets Duration: It also takes much longer to go by train, even if the TGV speeds up to about 320 km/h Entertainment: There is no lounge and onboard entertainment, but I do not like to watch movies on what feels like a 11 inch 480p screen anyway    Summer 2022 was not a great time for airplane travel in Europe. So, to sum it up: yes, not everyone is able to afford the more expensive tickets and it takes some degree of idealism to go by train. Still, I was surprised how simple and comfortable the journey was. I hope the train network will keep getting expanded, more overnight connections will be established and that this will also be a valid method of travel for people with smaller budgets and people who do not live in the well connected big cities. "
+    }, {
+    "id": 9,
+    "url": "/welcome/",
+    "title": "Welcome",
+    "body": "2022/08/01 - Welcome to my blog. This blog is still work in progress - if you see anything not working or looking weird, I would be happy if you let me know :) . I will write on here about whatever interests me, probably mostly technology related. We will see! "
+    }];
+
+var idx = lunr(function () {
+    this.ref('id')
+    this.field('title')
+    this.field('body')
+
+    documents.forEach(function (doc) {
+        this.add(doc)
+    }, this)
+});
+
+
+    
+function lunr_search(term) {
+    $('#lunrsearchresults').show( 1000 );
+    $( "body" ).addClass( "modal-open" );
+    
+    document.getElementById('lunrsearchresults').innerHTML = '<div id="resultsmodal" class="modal fade show d-block"  tabindex="-1" role="dialog" aria-labelledby="resultsmodal"> <div class="modal-dialog shadow-lg" role="document"> <div class="modal-content"> <div class="modal-header" id="modtit"> <button type="button" class="close" id="btnx" data-dismiss="modal" aria-label="Close"> &times; </button> </div> <div class="modal-body"> <ul class="mb-0"> </ul>    </div> <div class="modal-footer"><button id="btnx" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button></div></div> </div></div>';
+    if(term) {
+        document.getElementById('modtit').innerHTML = "<h5 class='modal-title'>Search results for '" + term + "'</h5>" + document.getElementById('modtit').innerHTML;
+        //put results on the screen.
+        var results = idx.search(term);
+        if(results.length>0){
+            //console.log(idx.search(term));
+            //if results
+            for (var i = 0; i < results.length; i++) {
+                // more statements
+                var ref = results[i]['ref'];
+                var url = documents[ref]['url'];
+                var title = documents[ref]['title'];
+                var body = documents[ref]['body'].substring(0,160)+'...';
+                document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML = document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML + "<li class='lunrsearchresult'><a href='" + url + "'><span class='title'>" + title + "</span><br /><small><span class='body'>"+ body +"</span><br /><span class='url'>"+ url +"</span></small></a></li>";
+            }
+        } else {
+            document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML = "<li class='lunrsearchresult'>Sorry, no results found. Close & try a different search!</li>";
+        }
+    }
+    return false;
+}
+</script>
+<style>
+    .lunrsearchresult .title {color: #d9230f;}
+    .lunrsearchresult .url {color: silver;}
+    .lunrsearchresult a {display: block; color: #777;}
+    .lunrsearchresult a:hover, .lunrsearchresult a:focus {text-decoration: none;}
+    .lunrsearchresult a:hover .title {text-decoration: underline;}
+</style>
+
+<form class="bd-search hidden-sm-down" onSubmit="return lunr_search(document.getElementById('lunrsearch').value);">
+<input type="text" class="form-control text-small"  id="lunrsearch" name="q" value="" placeholder="Type keyword"> 
+</form>
+                </ul>
+            </div>
+        </div>
+        </nav>
+    
+        <!-- Search Results -->
+        <div id="lunrsearchresults">
+            <ul class="mb-0"></ul>
+        </div>
+
+  <div class="cv_wrapper">
+  <div class="wrapper">
+    
+<div class="sidebar-wrapper">
+
+  <div class="profile-container">
+
+    
+    <img class="avatar" src="/assets/images/cv/small_quadrat.jpg" alt="profile picture" />
+    
+
+    
+    <h1 class="name">Benedikt Häuser</h1>
+    
+
+    
+    <h3 class="tagline">Senior Consultant Data Engineering</h3>
+    
+
+  </div><!--//profile-container-->
+
+  <div class="contact-container container-block">
+  <ul class="list-unstyled contact-list">
+
+    
+    <li class="email"><i class="fas fa-envelope"></i>
+      <a href="mailto:benedikt.haeuser@outlook.com">benedikt.haeuser@outlook.com</a>
+    </li>
+    
+
+    
+    <li class="timezone"><i class="fas fa-clock"></i>
+      <span>UTC + 2</span>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="linkedin"><i class="fab fa-linkedin"></i>
+      <a href="https://linkedin.com/in/benedikt-häuser-455216175" target="_blank">benedikt-häuser-455216175</a>
+    </li>
+    
+
+    
+    <li class="xing"><i class="fab fa-xing"></i>
+      <a href="https://www.xing.com/profile/Benedikt_Haeuser" target="_blank">Benedikt_Haeuser</a>
+    </li>
+    
+
+    
+    <li class="github"><i class="fab fa-github"></i>
+      <a href="http://github.com/BeneHa" target="_blank">BeneHa</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="twitter"><i class="fab fa-twitter"></i>
+      <a href="https://twitter.com/@benehaus" target="_blank">@benehaus</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="goodreads-g"><img src="assets/images/icons/komoot.png" style="padding-right: 4%"></i>
+      <a href="https://www.komoot.de/user/402325220843" target="_blank">Bene</a>
+    
+
+    
+
+  </ul>
+</div><!--//contact-container-->
+
+
+  
+    
+
+  
+  <div class="education-container container-block">
+
+    <h2 class="container-block-title">
+      Education
+    </h2>
+
+    
+    <div class="item">
+      <h4 class="degree">MSc in Business Intelligence & Analytics</h4>
+      <h5 class="meta">Technical University Chemnitz</h5>
+      <div class="time">2015 - 2017</div>
+    </div><!--//item-->
+    
+    <div class="item">
+      <h4 class="degree">BSc in Business Informatics</h4>
+      <h5 class="meta">DHBW Ravensburg</h5>
+      <div class="time">2012 - 2015</div>
+    </div><!--//item-->
+    
+
+  </div><!--//education-container-->
+  
+
+  
+
+  
+
+<div class="languages-container container-block">
+
+  <h2 class="container-block-title">
+    Languages
+  </h2>
+
+  <ul class="list-unstyled interests-list">
+    
+    <li>
+      German
+      <span class="lang-desc">(Native)</span>
+    </li>
+    
+    <li>
+      English
+      <span class="lang-desc">(Professional)</span>
+    </li>
+    
+  </ul>
+
+</div><!--//interests-->
+
+
+  
+
+<div class="interests-container container-block">
+
+  <h2 class="container-block-title">
+    Interests
+  </h2>
+
+  <ul class="list-unstyled interests-list">
+    
+
+      
+      <li>Climbing</li>
+      
+
+    
+
+      
+      <li>Road biking</li>
+      
+
+    
+
+      
+      <li>Environmental protection</li>
+      
+
+    
+
+      
+      <li>Video games</li>
+      
+
+    
+  </ul>
+
+</div><!--//interests-->
+
+
+
+
+</div><!--//sidebar-wrapper-->
+
+
+    <div class="main-wrapper" >
+        
+
+<section class="section summary-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+    </span>
+    Career Profile
+  </h2>
+
+  <div class="summary">
+    <p>I a am Munich-based IT Consultant specializing in Data Engineering in Azure. With more than
+5 years of experience across different industries I have a good overview of typical
+use cases, challenges and how to solve them.<br />
+In my free time I like to be outdoors, read, learn some new technology or play video games.<br />
+On this blog I write whatever comes to my mind, I am not sure yet how often I will write something here.</p>
+
+  </div><!--//summary-->
+    
+</section><!--//section-->
+
+
+
+
+
+
+
+
+<section class="section experiences-section">
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-briefcase fa-stack-1x fa-inverse"></i>
+    </span>
+    Experiences
+  </h2>
+
+  
+  <div class="item">
+
+    <div class="meta">
+
+      <div class="upper-row">
+        <h3 class="job-title">(Senior) Consultant Data Engineer</h3>
+        <div class="time">2020 - Present</div>
+      </div><!--//upper-row-->
+
+      <div class="company">b.telligent, Munich</div>
+
+    </div><!--//meta-->
+
+    
+    <div class="details">
+      <p>Implementing Cloud Data Platforms in Azure, including infrastructure, 
+data pipelines, monitoring, CI/CD and Data Warehouse structures.<br />
+Client industries include</p>
+<ul>
+  <li>Medicine technology</li>
+  <li>Retail</li>
+  <li>Automotive services</li>
+</ul>
+
+    </div><!--//details-->
+    
+
+  </div><!--//item-->
+  
+  <div class="item">
+
+    <div class="meta">
+
+      <div class="upper-row">
+        <h3 class="job-title">Data Analyst</h3>
+        <div class="time">2017 - 2020</div>
+      </div><!--//upper-row-->
+
+      <div class="company">Daimler AG, Stuttgart</div>
+
+    </div><!--//meta-->
+
+    
+    <div class="details">
+      <p>Data Science proof of concepts regarding spare part price behavior and price definition.<br />
+Azure Data Platform setup, implementation and optimization of Databricks jobs for data
+processing in PySpark.</p>
+
+    </div><!--//details-->
+    
+
+  </div><!--//item-->
+  
+  <div class="item">
+
+    <div class="meta">
+
+      <div class="upper-row">
+        <h3 class="job-title">Master thesis</h3>
+        <div class="time">2017</div>
+      </div><!--//upper-row-->
+
+      <div class="company">Continental, Hannover</div>
+
+    </div><!--//meta-->
+
+    
+    <div class="details">
+      <p>Analyze onboard vehicle telemetry data in R and enrich it with Open Data
+for better understanding of vehicle driving patterns and environment conditions.</p>
+
+    </div><!--//details-->
+    
+
+  </div><!--//item-->
+  
+
+</section><!--//section-->
+
+
+
+
+<section class="section projects-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-archive fa-stack-1x fa-inverse"></i>
+    </span>
+    Projects
+  </h2>
+
+  
+  <div class="intro">
+      <p>In my free time I try to do something interesting and worthwile.
+</p>
+  </div><!--//intro-->
+  
+
+  
+    <div class="item">
+
+      <span class="project-title">
+        
+        <a href="www.rieselbar.de/lang/en/index.html" >Cooperative Rieselbar</a>
+        
+      </span>
+
+      
+      - <span class="project-tagline">We try to open a zero packaging store in the north of Munich.</span>
+      
+
+    </div><!--//item-->
+  
+
+</section><!--//section-->
+
+
+
+
+<section class="skills-section section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-wrench fa-stack-1x fa-inverse"></i>
+    </span>
+    Skills &amp; Proficiency
+  </h2>
+
+  <div class="skillset">
+
+    
+    <div class="item">
+
+      <h3 class="level-title">Azure</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="90%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">Snowflake</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="90%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">Databricks / Spark</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="80%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">Python</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="75%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">Terraform</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="70%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">DevOps</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="70%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+    <div class="item">
+
+      <h3 class="level-title">Kafka</h3>
+
+      <div class="level-bar">
+        <div class="level-bar-inner" data-level="50%">
+        </div>
+      </div><!--//level-bar-->
+
+    </div><!--//item-->
+    
+
+  </div>
+
+</section><!--//skills-section-->
+
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-white border-top p-3 text-muted small" style="width: 100%">
+        <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div>
+                <span class="navbar-brand mr-2 mb-0"><strong>bene.haus</strong></span>
+                <span>Copyright © <script>document.write(new Date().getFullYear())</script></span>
+
+            </div>
+            <div>
+                Based on <a target="_blank" class="text-dark font-weight-bold" href="https://www.wowthemes.net/mundana-jekyll-theme/"> Mundana</a> and <a target="_blank" class="text-dark font-weight-bold" href="https://github.com/sharu725/online-cv">online-cv</a>.
+            </div>
+        </div>
+        </div>
+    </footer>
+
+<!-- custom js -->
+<script type="text/javascript" src="/assets/js/main.js"></script>
+<script src="/assets/js/theme.js"></script>
+</body>
+
+</html>
