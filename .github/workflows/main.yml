@@ -23,8 +23,9 @@ jobs:
         target_path: '_site'
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
+        cli_version: 2.34.1
         source_dir: '_site'
         container_name: '$web'
         sas_token: ${{ secrets.sas_token }}
         account_name: ${{ secrets.storage_account_name }}
-        sync: true
+        overwrite: 'true'
