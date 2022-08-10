@@ -26,4 +26,44 @@ On the Blob storage, click on "Static website" in the menu and set it to Enabled
 
 ## Github - deploy website
 
-Now we want our website to be deployed to this storage account. Got to Github, create a repository and push you code.
+Now we want our website to be deployed to this storage account. Got to Github, create a repository and push you code. Now, head to the settings of your repository and go to Secrets -> Actions. Create new repository secrets:
+- STORAGE_ACCOUNT_NAME is the name of the storage account you created
+- SAS_TOKEN: In the Azure portal, got to you storage account and "Shared access signature". Create a token with write permissions to the Blob service and Container resource type that is valid for a year
+
+Now create a  file defining the Github Action workflow:
+```
+name: Build and deploy Jekyll site to Azure Blob static page
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    # Standard usage
+    - uses: lemonarc/jekyll-action@1.0.0
+    - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+      with:
+        source_dir: '_site'
+        container_name: $web
+        sas_token: ${{ secrets.sas_token }}
+        account_name: ${{ secrets.storage_account_name }} 
+        extra_args: --overwrite True
+        sync: true
+```
+
+This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web.
+
+
+
+## CDN refresh
