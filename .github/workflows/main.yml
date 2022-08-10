@@ -21,7 +21,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         jekyll_src: 'jekyll'
         target_path: '_site'
-    - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+    - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         source_dir: '_site'
         container_name: '$web'
