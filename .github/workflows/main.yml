@@ -27,5 +27,4 @@ jobs:
         container_name: '$web'
         sas_token: ${{ secrets.sas_token }}
         account_name: ${{ secrets.storage_account_name }}
-        overwrite: true
         sync: true

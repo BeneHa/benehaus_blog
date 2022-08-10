@@ -4,7 +4,7 @@
 
 ## Jekyll
 
-## Namecheap
+
 
 ## Azure Portal - Storage account
 
@@ -70,5 +70,18 @@ This will build the Jekyll page and deploy the folder with the built website cod
     alt="Github action" %}
 
 Check the results by going to the website at the URL you saw before when setting up the Static Webpage for the Blob storage.
+
+Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done.  
+What we want to change now is the url where the website can be accessed (it still has the ugly long name with .core.windows.net in it).
+
+## Namecheap
+
+So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene.haus:
+
+{% include image.html
+    url="/assets/images/blogposts/2022-08-12-blog-setup/1_namecheap_search.png"
+    description="Depending on the URL ending, you can pay a few euros or several thousand per year"
+    alt="Namecheap domains" %}
+
 
 ## CDN refresh
