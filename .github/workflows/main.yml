@@ -23,6 +23,8 @@ jobs:
         target_path: '~/jekyll/_site'
         build_dir: '~/jekyll/_site'
         build_only: 'true'
+    - name: ls
+      run: ls -la ~/jekyll
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
