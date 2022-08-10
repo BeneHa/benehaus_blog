@@ -74,6 +74,8 @@ Check the results by going to the website at the URL you saw before when setting
 Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done.  
 What we want to change now is the url where the website can be accessed (it still has the ugly long name with .core.windows.net in it).
 
+## Azure Portal - CDN endpoint
+
 ## Namecheap
 
 So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene.haus:
@@ -83,5 +85,11 @@ So we first need to buy an URL. I used namecheap but you can use any other domai
     description="Depending on the URL ending, you can pay a few euros or several thousand per year"
     alt="Namecheap domains" %}
 
+After the checkout, the domain can be seen in the list of your domains. Click on "Manage" to got to the settings.
+
+{% include image.html
+    url="/assets/images/blogposts/2022-08-12-blog-setup/2_namecheap_domain_list.png"
+    description="List of namecheap domains"
+    alt="Namecheap domains" %}
 
 ## CDN refresh
