@@ -31,4 +31,3 @@ jobs:
         sas_token: ${{ secrets.SAS_TOKEN }}
         account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
         overwrite: 'true'
-        
