@@ -76,6 +76,9 @@ What we want to change now is the url where the website can be accessed (it stil
 
 ## Azure Portal - CDN endpoint
 
+Let's go back to the Azure portal and create a CDN endpoint. Add a resource and search for "Front Door and CDN profiles". Select "Explore other offerings" and "Azure CDN Standard". Again, define a name and click on "Create".
+
+
 ## Namecheap
 
 So we first need to buy an URL. I used namecheap but you can use any other domain registry for that. Just select a cheap one and buy it, in my case bene.haus:

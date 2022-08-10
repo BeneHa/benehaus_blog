@@ -3,7 +3,7 @@ name: Build and deploy Jekyll site to Azure Blob static page
 on:
   push:
     branches:
-      - '**'
+      - 'main'
 
 jobs:
   jekyll:
@@ -20,11 +20,12 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         jekyll_src: 'jekyll'
-        target_path: '~/jekyll/_site'
+        build_only: 'true'
+        build_dir: _site
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
-        source_dir: '~/jekyll/_site'
+        source_dir: '_site'
         container_name: '$web'
         sas_token: ${{ secrets.SAS_TOKEN }}
         account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
