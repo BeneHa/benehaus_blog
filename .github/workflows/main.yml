@@ -16,8 +16,10 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/jekyll/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    # Standard usage
-    - uses: lemonarc/jekyll-action@1.0.0
+    - uses: helaili/jekyll-action@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        jekyll_src: 'jekyll'
     - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
       with:
         source_dir: '_site'

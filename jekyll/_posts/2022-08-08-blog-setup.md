@@ -64,6 +64,9 @@ jobs:
 
 This will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch.
 
-
+{% include image.html
+    url="/assets/images/blogposts/2022-08-12-blog-setup/5_github_action.png"
+    description="Triggering a Github action"
+    alt="Github action" %}
 
 ## CDN refresh
