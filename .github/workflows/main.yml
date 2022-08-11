@@ -26,11 +26,11 @@ jobs:
     - name: ls
       run: ls -la ~/runners
     - name: ls
-      run: ls -la ~/work/benehaus_blog/benehaus_blog
+      run: ls -la ~/work/benehaus_blog/benehaus_blog/jekyll
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
-        source_dir: '~/jekyll/_site'
+        source_dir: '~/work/benehaus_blog/benehaus_blog/jekyll/_site'
         container_name: '$web'
         sas_token: ${{ secrets.SAS_TOKEN }}
         account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
