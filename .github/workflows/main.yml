@@ -23,7 +23,7 @@ jobs:
         build_dir: '_site'
         build_only: 'true'
     - name: ls
-      run: ls ~/work/benehaus_blog/benehaus_blog/jekyll/_site/
+      run: ls ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
     - uses: actions/upload-artifact@v3
       with:
         name: jekyll_site
