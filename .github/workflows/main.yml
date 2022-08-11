@@ -18,11 +18,12 @@ jobs:
           ${{ runner.os }}-gems-
     - uses: helaili/jekyll-action@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         jekyll_src: 'jekyll'
         target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
+    - name: pwd
+      run: pwd
     - name: chmod
       run: chown -R runner:runner ~/work/benehaus_blog/benehaus_blog/_site/
     - name: ls
