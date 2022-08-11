@@ -18,12 +18,12 @@ jobs:
           ${{ runner.os }}-gems-
     - uses: helaili/jekyll-action@v2
       with:
-        jekyll_src: 'jekyll'
+        jekyll_src: '~/work/benehaus_blog/benehaus_blog/jekyll'
         target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
     - name: ls
-      run: ls ~/work/benehaus_blog/benehaus_blog/_site/
+      run: ls ~/work/benehaus_blog/benehaus_blog/jekyll/_site/
     - uses: actions/upload-artifact@v3
       with:
         name: jekyll_site
