@@ -23,6 +23,8 @@ jobs:
         target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
+    - name: chmod
+      run: chmod -R 777 _site/
     - name: ls
       run: ls -la ~/work/benehaus_blog/benehaus_blog
     - name: ls
