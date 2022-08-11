@@ -19,7 +19,7 @@ jobs:
     - uses: helaili/jekyll-action@v2
       with:
         jekyll_src: 'jekyll'
-        target_path: '_site_build'
+        target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
     - name: ls
