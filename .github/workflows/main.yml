@@ -20,11 +20,11 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         jekyll_src: 'jekyll'
-        target_path: '~/jekyll/_site'
-        build_dir: '~/jekyll/_site'
+        target_path: '_site'
+        build_dir: '_site'
         build_only: 'true'
     - name: ls
-      run: ls -la ~/runners
+      run: ls -la ~/work/benehaus_blog/benehaus_blog
     - name: ls
       run: ls -la ~/work/benehaus_blog/benehaus_blog/jekyll
     - uses: bacongobbler/azure-blob-storage-upload@main
