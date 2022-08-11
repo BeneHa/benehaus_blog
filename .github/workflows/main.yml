@@ -22,6 +22,8 @@ jobs:
         target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
+    - name: ls
+      run: ls ~/work/benehaus_blog/benehaus_blog/_site/
     - uses: actions/upload-artifact@v3
       with:
         name: jekyll_site
