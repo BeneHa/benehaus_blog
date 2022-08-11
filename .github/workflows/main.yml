@@ -24,7 +24,9 @@ jobs:
         build_dir: '~/jekyll/_site'
         build_only: 'true'
     - name: ls
-      run: ls -la ~
+      run: ls -la ~/runners
+    - name: ls
+      run: ls -la ~/work
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
