@@ -1,5 +1,5 @@
 ---
-
+title: Setting up a static website with Jekyll, Azure Blob and Github Actions
 image: assets/images/blogposts/2022-08-12-blog-setup/10_https_connection.png
 ---
 
