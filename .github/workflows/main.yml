@@ -24,8 +24,6 @@ jobs:
         build_only: 'true'
     - name: chmod
       run: sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
-    - name: ls
-      run: ls -la ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
@@ -34,4 +32,9 @@ jobs:
         sas_token: ${{ secrets.SAS_TOKEN }}
         account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
         overwrite: 'true'
-        
+    - name: Azure Login
+          uses: Azure/login@v1.4.3
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - run: |
+        az cdn endpoint purge -g benehaus-blog-rg -n benehausblogendpoint --profile-name benehaus-blog-cdn --content-paths '/*'
