@@ -33,8 +33,8 @@ jobs:
         account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
         overwrite: 'true'
     - name: Azure Login
-          uses: Azure/login@v1.4.3
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      uses: Azure/login@v1.4.3
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - run: |
         az cdn endpoint purge -g benehaus-blog-rg -n benehausblogendpoint --profile-name benehaus-blog-cdn --content-paths '/*'
