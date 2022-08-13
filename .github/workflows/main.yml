@@ -22,6 +22,8 @@ jobs:
         target_path: '_site'
         build_dir: '_site'
         build_only: 'true'
+    - name: chmod
+      run: sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
     - name: ls
       run: ls -la ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
     - uses: bacongobbler/azure-blob-storage-upload@main
