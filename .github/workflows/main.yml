@@ -23,7 +23,7 @@ jobs:
         build_dir: '_site'
         build_only: 'true'
     - name: ls
-      run: ls ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
+      run: ls -la ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
     - uses: bacongobbler/azure-blob-storage-upload@main
       with:
         cli_version: 2.34.1
