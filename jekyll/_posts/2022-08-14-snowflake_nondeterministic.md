@@ -1,6 +1,7 @@
 ---
 title: Nondeterministic behaviour of Snowflake based on warehouses
 image: assets/images/blogposts/2022-08-14-snowflake-nondeterministic/snowflake.png
+categories: [ Technical, Snowflake ]
 ---
 
 In the past week I stumbled upon a weird behaviour in Snowflake when a colleague asked me to help with a problem he did not understand. Basically, a data load process behaved differently if it was run from different tools (manually calling the Stored Procedure or calling it from Azure Data Factory). We narrowed it down to a view which does some business logic and should, given the same input data, always output the same result.  
