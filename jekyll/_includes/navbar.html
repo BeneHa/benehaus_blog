@@ -1,21 +1,15 @@
     <!-- Navbar -->
-    <nav id="MagicMenu" class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
-        <div class="container" style="height:10vh; margin-right:0">
-
+    <nav id="MagicMenu" class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container">
             <a href="{{ site.baseurl }}/index.html"><img src="/assets/images/logo/300.png" alt="Home button" style="width:9vh;height:9vh;"></a>
 
-            <div class="navbar nav-scale" style="align-items: right; padding: 0; width: 40vw" >
-                <ul class="navbar-nav mr-auto d-flex align-items-center" style="width: 50%;">
+            <div class="navbar" id="navbarColor02" style="">
+                <ul class="navbar-nav mr-auto d-flex align-items-center">
                    {% include menu-header.html %}
                 </ul>
-                <ul class="navbar-nav ml-auto d-flex align-items-center" style="width: 50%;">
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
                     {% include search-lunr.html %}
                 </ul>
             </div>
         </div>
         </nav>
-    
-        <!-- Search Results -->
-        <div id="lunrsearchresults">
-            <ul class="mb-0"></ul>
-        </div>
