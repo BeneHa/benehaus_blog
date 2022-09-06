@@ -147,7 +147,7 @@ a.text-dark:hover {
 	border-color:transparent;
 }
 .btn-link.btn-dark {
-	color:#212529;
+	color:#292929;
 	border-color:transparent;
 }
 .btn-link.btn-white {
@@ -363,7 +363,7 @@ a.text-dark:hover {
 	fill:#f8f9fa !important;
 }
 .bg-dark {
-	fill:#212529 !important;
+	fill:#292929 !important;
 }
 .bg-white {
 	fill:#fff !important;
@@ -522,8 +522,8 @@ a.text-dark:hover {
 }
 .alert-dark {
 	color:#fff;
-	background-color:#212529;
-	border-color:#212529;
+	background-color:#292929;
+	border-color:#292929;
 }
 .alert-dark hr {
 	border-top-color:#16181b;
@@ -662,7 +662,7 @@ footer {
 article {
 	font-size:20px;
 	line-height:1.86;
-    font-family:Lora;
+    font-family:charter, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 .article-headline {
     font-family: Georgia,Times,"Times New Roman",serif;
