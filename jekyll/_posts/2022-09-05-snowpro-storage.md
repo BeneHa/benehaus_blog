@@ -6,7 +6,7 @@ categories: [ Technical, Snowflake ]
 I am currently preparing for the SnowPro Core certification which is the standard technical Snowflake certifications. More specialized certifications can be gained after this one is achieved. More details can be found on the <a href="https://www.snowflake.com/certifications/">Snowflake website</a>.  
 
 Other articles in this series:  
-<a href="https://www.bene.haus/snowpro-warehouses/">Part 1 - Warehouses</a>
+<a href="../snowpro-warehouses/">Part 1 - Warehouses</a>
 
 
 So, let's jump right into the second topic, which is storage and protection:
