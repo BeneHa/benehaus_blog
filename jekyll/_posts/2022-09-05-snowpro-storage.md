@@ -6,7 +6,14 @@ categories: [ Technical, Snowflake ]
 I am currently preparing for the SnowPro Core certification which is the standard technical Snowflake certifications. More specialized certifications can be gained after this one is achieved. More details can be found on the <a href="https://www.snowflake.com/certifications/">Snowflake website</a>.  
 
 Other articles in this series:  
-<a href="../snowpro-warehouses/">Part 1 - Warehouses</a>
+<a href="../snowpro-warehouses">Part 1 - Warehouses</a>   
+<a href="../snowpro-storage">Part 2 - Storage</a>  
+<a href="../snowpro-account">Part 3 - Account and security</a>   
+<a href="../snowpro-movement">Part 4 - Data movement</a>  
+<a href="../snowpro-overview">Part 5 - Overview and architecture</a>
+<a href="../snowpro-performance">Part 6 - Performance tuning</a>
+<a href="../snowpro-semistructured">Part 7 - Semi-structured data</a>
+
 
 
 So, let's jump right into the second topic, which is storage and protection:
@@ -36,8 +43,8 @@ Benefits:​
 Considerations:​
 - Use on tables with a large number of micro partitions (Typically multiple terabytes).​
 - Query advantages (one or both):​
-- The queries are selective (only read the necessary micro partitions).​
-- The queries sort the data (ORDER BY clause)​
+    - The queries are selective (only read the necessary micro partitions).​
+    - The queries sort the data (ORDER BY clause)​
 - High number of queries can benefit if they use the same few columns (or at least the key columns)
 
 Table and view types are well described in these images from Snowflake:

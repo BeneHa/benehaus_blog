@@ -7,7 +7,13 @@ I am currently preparing for the SnowPro Core certification which is the standar
 
 Other articles in this series:  
 <a href="../snowpro-warehouses">Part 1 - Warehouses</a>   
-<a href="../snowpro-storage">Part 2 - Storage</a>
+<a href="../snowpro-storage">Part 2 - Storage</a>  
+<a href="../snowpro-account">Part 3 - Account and security</a>   
+<a href="../snowpro-movement">Part 4 - Data movement</a>  
+<a href="../snowpro-overview">Part 5 - Overview and architecture</a>
+<a href="../snowpro-performance">Part 6 - Performance tuning</a>
+<a href="../snowpro-semistructured">Part 7 - Semi-structured data</a>
+
 
 So, let's jump right into the third topic, which is account and security:
 
@@ -18,6 +24,7 @@ Encryption:
 - Only the customer or runtime components can read the data
 - The customer puts encrypted data to the external staging area and provides Snowflake with the encryption master key
 - For Snowflake stages, the customer provides unencrpyted data which Snowflake will encrypt automatically
+- States of encryption keys: active, retired, destroyed
 
 Security overall:  
 - You can create multiple network policies of whitelists and blacklists of IP ranges but only have one active at the time (by the way, it is 2022, how about allow- and blocklists?)

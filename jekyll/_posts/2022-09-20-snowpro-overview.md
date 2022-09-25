@@ -1,5 +1,5 @@
 ---
-title: Snowpro Core preparation part 4 - Data movement
+title: Snowpro Core preparation part 5 - Overview and architecture
 image: assets/images/blogposts/2022-08-27-snowpro-warehouses/snowpro-certification-core.png
 categories: [ Technical, Snowflake ]
 ---
@@ -11,6 +11,9 @@ The whole series:
 <a href="../snowpro-account">Part 3 - Account and security</a>   
 <a href="../snowpro-movement">Part 4 - Data movement</a>  
 <a href="../snowpro-overview">Part 5 - Overview and architecture</a>
+<a href="../snowpro-performance">Part 6 - Performance tuning</a>
+<a href="../snowpro-semistructured">Part 7 - Semi-structured data</a>
+
 
 So, let's jump right into the fifth topic, which is overview and architecture:
 
