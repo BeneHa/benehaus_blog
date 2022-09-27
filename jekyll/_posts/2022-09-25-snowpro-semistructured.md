@@ -1,5 +1,5 @@
 ---
-title: Snowpro Core preparation part 5 - Overview and architecture
+title: Snowpro Core preparation part 7 - semi-structured data
 image: assets/images/blogposts/2022-08-27-snowpro-warehouses/snowpro-certification-core.png
 categories: [ Technical, Snowflake ]
 ---
