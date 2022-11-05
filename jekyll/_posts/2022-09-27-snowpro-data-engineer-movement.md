@@ -50,6 +50,14 @@ Data sharing:
 
 COPY INTO:
 - loads from named internal stage (table / user stage), load files there using PUT, or named external stage
+- Validation_mode: RETURN_n_ROWS, RETURN_ERRORS, RETURN_ALL_ERRORS
+- FORMAT_NAME and TYPE are mutually exclusive
+- Compression: gzip, bz2, brotli, zstd, deflate, raw_deflate
+- Allowed operations: column reordering, omission, casts, truncating text strings that exceed column length
+
+Data movement:
+- per-byte fee when transferring from Snowflake account into cloud storages in another region or another cloud platform
+- Egress charges: for unloading from Snowflake, database replication, external functions
 
 Misc commands:
 - DESCRIBE STAGE: describes values specified for properties in a stage (file format, copy, location) as well as defaults
@@ -64,3 +72,6 @@ Misc commands:
     - METADATA$FILENAME, METADATA$FILE_ROW_NUMBER for file information
     - row access policy can be added
     - use POLICY_CONTEXT for simulating query results
+
+Misc queries:
+- PIPE_LOAD_STATUS for validating loads
