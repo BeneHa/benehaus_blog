@@ -6,6 +6,8 @@ categories: [ Technical, Snowflake ]
 I am currently preparing for the SnowPro Core certification which is the standard technical Snowflake certifications. More specialized certifications can be gained after this one is achieved. More details can be found on the <a href="https://www.snowflake.com/certifications/">Snowflake website</a>.  
 For each of the topics I will be collecting information for the test in the form of bullet points which I will share here. This is not a full list of everything that will help you pass this exam, but simply my personal study notes. If the help you preparing, great, but please do not use them as the sole source for studying!  
 
+The study guide can be found [here](../assets/documents/snowflake/COF-CO2_SnowProCoreStudyGuide_090922.pdf).
+
 The whole series:  
 <a href="../snowpro-warehouses">Part 1 - Warehouses</a>   
 <a href="../snowpro-storage">Part 2 - Storage</a>  
