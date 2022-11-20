@@ -18,6 +18,9 @@ sidebar:
     komoot:
       userid: '402325220843'
       displayname: 'Bene'
+    mastodon:
+      handle: \@beneha
+      instance: muenchen.social
 
     languages:
       - idiom: German

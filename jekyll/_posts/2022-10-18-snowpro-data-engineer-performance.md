@@ -55,6 +55,7 @@ Search optimization service:
 - Improves point lookups, substring and regex searches, queries on VARIANT / OBJECT / ARRAY, queries with GEOGRAPHY values
 - Maintenance service creates optimized search access path
 - ESTIMATE_SEARCH_OPTIMIZATION_COSTS returns build costs, storage costs, compute costs
+- Create using ALTER TABLE tab ADD SEARCH OPTIMIZATION
 
 Storage:
 - Use TABLE_STORAGE_METRICS view
