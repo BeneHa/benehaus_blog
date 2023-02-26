@@ -1,10 +1,8 @@
 ---
 layout: post
 title:  "Experiences travelling by train in Europe"
-author: Benedikt
 categories: [travel]
 image: assets/images/blogposts/2022-08-06-train-travel/train_route.png
-tags: [sticky]
 ---
 
 The climate crisis is getting more obvious by the day and everybody should think of his or her part in it and how to reduce their carbon footprint. On the other hand, nobody wants to sit at home all day not doing anything in order to have the lowest possible CO2 emissions, so for many activities we have to find alternatives producing fewer emissions.
