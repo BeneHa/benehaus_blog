@@ -57,8 +57,13 @@ education:
       time: 2012 - 2015
 
 experiences:
+    - role: Azure Cloud Architect
+      time: 2023 - Present
+      company: SWM, Munich
+      details: |
+        Implement infrastructure in Azure for teams to run and migrate their workloads in the cloud.
     - role: (Senior) Consultant Data Engineer
-      time: 2020 - Present
+      time: 2020 - 2023
       company: b.telligent, Munich
       details: |
         Implementing Cloud Data Platforms in Azure, including infrastructure, 
