@@ -1,6 +1,6 @@
 ---
 title: "My bikepacking trip in Italy in March 2023"
-image: 
+image: assets/images/blogposts/2023-04-01-bikepacking/image_day5_2.JPG
 categories: [ General ]
 ---
 
