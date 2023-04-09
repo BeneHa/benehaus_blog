@@ -18,12 +18,12 @@ I started from Bologna because there is a direct train from Munich to Bologna (a
 From Bologna I started going straight south. So pretty soon I went up into the mountains which cannot be avoided if you want to go south from here. Up there it was more windy and cool than I had hoped so I tried to get as far as possible that day, but the 2.000 meters in altitude that day really did a number on me (I had not been on my bike much the months before) and so I stayed in a BnB in the Florence area that night.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day1.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day1.jpg"
     description="A village somewhere in the mountains"
     alt="Picture of the scenery along the track" %}
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day1_2.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day1_2.jpg"
     description="The accomodation, a former knight's house of some sort, I stayed in for the first night"
     alt="Picture of the scenery along the track" %}
 
@@ -37,7 +37,7 @@ From Bologna I started going straight south. So pretty soon I went up into the m
 The next day I went further south, leaving the mountains behind after some time. For a part of the day I went along a european long distance cycling route, which meant there were quite a few gravel roads or smaller normal roads that were mostly connected and highlighted by signs. It was not all bike-only roads, but at least no bigger roads with trucks speeding past you were part of the track.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day2.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day2.jpg"
     description="Long distance gravel tracks"
     alt="Picture of the scenery along the track" %}
 
@@ -52,12 +52,12 @@ On the next day I went east, first to Lago Trasimeno and then up into the mounta
 Going up and enjoying the view over Lago Trasimeno was really beautiful to start the day. As this was a sunday, lots of road bikers were on the road, it seems this area is popular for hobby cyclists and sports clubs for training.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day3.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day3.jpg"
     description="The view on Lago Trasimeno"
     alt="Picture of the scenery along the track" %}
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day3_2.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day3_2.jpg"
     description="The view on Gubbio"
     alt="Picture of the scenery along the track" %}
 
@@ -71,12 +71,12 @@ Going up and enjoying the view over Lago Trasimeno was really beautiful to start
 From Gubbio I went east. This was probably my favourite part of the tour, as you leave the city behind and quite soon are in a beautiful mountain scenery, on roads where you see maybe one car every half hour because it is so remote. Also, apart from a few ascents, this day was going downhill way more than uphill which was also a nice change. And seeing mountains scenery and beaches and the sea in a single day is quite a nice contrast. The only downside is that the beaches on the eastern coast are visited by huge amounts of tourists every year, so the cities there are mostly collections of hotels which were also mostly empty in March. Compared to Gubbio and the small towns of Tuscany, this area therefore has less to offer when it comes to sightseeing and just enjoying the view while biking through the landscape.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day4.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day4.jpg"
     description="Remote roads in the mountains"
     alt="Picture of the scenery along the track" %}
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day4_2.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day4_2.jpg"
     description="Lunch break in the hills close to the sea"
     alt="Picture of the scenery along the track" %}
 
@@ -91,17 +91,17 @@ Going north along the coast it seemed like the obvious thing to do to make the d
 I went back towards the sea simply because there was an affordable accomodation there, the area around San Marino is quite expensive otherwise.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5.jpg"
     description="The view on San Marino"
     alt="Picture of the scenery along the track" %}
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5_2.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5_2.jpg"
     description="Some nice small roads through the hills"
     alt="Picture of the scenery along the track" %}
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5_3.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day5_3.jpg"
     description="Sunset at the sea"
     alt="Picture of the scenery along the track" %}
 
@@ -115,7 +115,7 @@ I went back towards the sea simply because there was an affordable accomodation 
 On the second to last day, I was going in the direction of Bologna. There were some nice gravel paths but otherwise that day was not very spectacular.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day6.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day6.jpg"
     description="Relaxed graveling through the hills"
     alt="Picture of the scenery along the track" %}
 
@@ -129,7 +129,7 @@ On the second to last day, I was going in the direction of Bologna. There were s
 On the last day I just went back to Bologna. Around the city the traffic is getting a lot thicker so I just took a direct route back to my hostel. Also, after seven days on the bike, I was getting a bit tired and just wanted to spend some time in Bologna exploring it by foot so I just took the shortest route and called it a day.
 
 {% include image.html
-    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day7.JPG"
+    url="/assets/images/blogposts/2023-04-01-bikepacking/image_day7.jpg"
     description="The main square back in Bologna"
     alt="Picture of the scenery along the track" %}
 
