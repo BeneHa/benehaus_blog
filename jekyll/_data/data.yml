@@ -4,23 +4,18 @@ sidebar:
 
     # Profile information
     name: Benedikt Häuser 
-    tagline: Senior Consultant Data Engineering
-    avatar: cv/small_quadrat.jpg  #place a 100x100 picture inside /assets/images/ folder and provide the name of the file below
-
+    tagline: Azure Cloud Architect 
+    avatar: cv/small_quadrat.jpg 
+    
     # Sidebar links
     email: benedikt.haeuser@outlook.com
     citizenship: German
     linkedin: benedikt-häuser-455216175
     certly: benedikt-hauser
-    xing: Benedikt_Haeuser
     github: BeneHa
-    twitter: '@benehaus'
     komoot:
       userid: '402325220843'
       displayname: 'Bene'
-    mastodon:
-      handle: \@beneha
-      instance: muenchen.social
 
     languages:
       - idiom: German
@@ -42,11 +37,19 @@ sidebar:
 career-profile:
     title: Career Profile
     summary: |
-      I a am Munich-based IT Consultant specializing in Data Engineering in Azure. With more than
+      I a am Munich-based IT guy specializing in Azure, Infrastructure as Code and formerly Data Engineering. With more than
       5 years of experience across different industries I have a good overview of typical
       use cases, challenges and how to solve them.  
       In my free time I like to be outdoors, read, learn some new technology or play video games.  
-      On this blog I write whatever comes to my mind, I am not sure yet how often I will write something here.
+      On this blog I write whatever comes to my mind, but I am not sure yet how often I will write something here.
+
+bike-heatmap:
+    title: Bike Heatmap
+    summary: A heatmap of all my bike tracks driven based on komoot GPS data.
+
+bike-barplot:
+    title: Biking distances
+    summary: Kilometers driven per month on tours on my bike.
 
 education:
     - degree: MSc in Business Intelligence & Analytics

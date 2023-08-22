@@ -1,0 +1,20 @@
+{% assign bike-heatmap = site.data.data.bike-heatmap %}
+{% if bike-heatmap %}
+<section class="section summary-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+    </span>
+    {{ bike-heatmap.title }}
+  </h2>
+
+  <div class="summary">
+    {{ bike-heatmap.summary | markdownify }}
+  </div><!--//summary-->
+
+  <iframe src="https://benehausblogstorage.blob.core.windows.net/komootplots/bike_heatmap.html" style="width:100%;height:60vh"></iframe>
+    
+</section><!--//section-->
+{% endif %}
