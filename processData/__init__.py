@@ -13,11 +13,11 @@ from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient, ContentSettings
 
 
-def get_blob_client(containername):
+def get_blob_client(container):
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
     client = BlobServiceClient(f"https://{os.environ['blob_storage_name']}.blob.core.windows.net/", credential=default_credential)
-    return client.get_container_client(container=containername)
+    return client.get_container_client(container=container)
 
 def prepare_df(container_client):
     # get all tours and fetch details for each

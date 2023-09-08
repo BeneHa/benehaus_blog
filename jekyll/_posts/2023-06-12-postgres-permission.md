@@ -19,3 +19,6 @@ The workaround we are using for now is to give the development teams Contributor
 ## The Microsoft answer
 
 We discussed this issue with Microsoft support and they agreed there should be an option to skip the recreation of the VNet link for a database restore. They said they have put this on the development roadmap (this was beginning of June 2023). Let's see how long it takes :)
+
+## Update
+The vnet linking has now been made optional as described (here)[https://techcommunity.microsoft.com/t5/azure-database-for-postgresql/dns-zone-linking-is-no-longer-enforced-when-creating-azure/ba-p/3911877].

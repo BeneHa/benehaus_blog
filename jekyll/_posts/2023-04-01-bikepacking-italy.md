@@ -2,6 +2,7 @@
 title: "My bikepacking trip in Italy in March 2023"
 image: assets/images/blogposts/2023-04-01-bikepacking/image_day5_2.jpg
 categories: [ General ]
+tags: [sticky]
 ---
 
 In the end of March this year I went bikepacking in Italy. I wanted to go on a holiday before starting my new job at SWM and I always wanted to spend a holiday just travelling by bike, so this was the perfect time to do it.

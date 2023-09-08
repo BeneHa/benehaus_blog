@@ -1,10 +1,8 @@
 import datetime
-import logging
 import requests
 import base64
 import json
 import os
-import io
 
 import azure.functions as func
 from azure.identity import DefaultAzureCredential
