@@ -1,12 +1,13 @@
 import datetime
 import json
 import os
-from io import BytesIO
+import io 
 import pandas as pd
+from pandas.tseries.offsets import MonthBegin
+import codecs
 
 import folium
 from folium.plugins import HeatMap
-import matplotlib.pyplot as plt
 
 import azure.functions as func
 from azure.identity import DefaultAzureCredential
@@ -35,9 +36,10 @@ def prepare_df(container_client):
 
 def heatmap_func(df):
     df2 = df.explode("coordinates")
-    df2["lat"] = df.coordinates.str["lat"]
-    df2["lon"] = df.coordinates.str["lng"]
-    
+    x = df2.coordinates.str
+    df2["lat"] = df2.coordinates.str["lat"]
+    df2["lon"] = df2.coordinates.str["lng"]
+
     df2.pop("coordinates")
 
     LAT_MIN = 47.7
@@ -66,19 +68,40 @@ def barplot_func(df):
     max_date = max(df_dist["date"])
     for year in range(2022, max_date.year):
         for month in ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]:
-            df_new = pd.DataFrame([[pd.to_datetime(f'{year}-{month}-01 10:00:00.0000000000', format='%Y-%m-%d %H:%M:%S.%f'), "0", 0, "0", "bike", 0]],
+            df_new = pd.DataFrame([[pd.to_datetime(f'{year}-{month}-01 10:00:00.0000000000', format='%Y-%m-%d %H:%M:%S.%f', utc=True), "0", 0, "0", "bike", 0]],
                                 columns=["date", "name", "distance", "duration", "sport", "elevation_up"])
             df_dist = pd.concat([df_dist, df_new])
 
-    df_dist['year_month'] = df_dist['date'] + pd.offsets.MonthBegin(-1)
+    df_dist['year_month'] = df_dist['date'].dt.normalize().map(MonthBegin().rollback)
     df_dist['year_month'] = df_dist["year_month"].astype(str).str.slice(0,7)
 
     df_dist["distance"] = df_dist["distance"] / 1000
-    df_grouped = df_dist.groupby(["year_month"])["distance"].sum().reset_index()
+    df_grouped = df_dist.groupby(["year_month"], dropna=False)["distance"].sum().reset_index()
+    df_grouped.distance = df_grouped.distance.round(0)
 
-    fix, ax = plt.subplots(figsize=(10,6))
-    ax.bar(df_grouped["year_month"], df_grouped["distance"])
-    return fix, ax
+    js_string = f"""// automatically generated file, do not change here!
+        var xValues = {df_grouped["year_month"].tolist()};
+        var yValues = {df_grouped["distance"].tolist()};
+        var barColors ="blue";
+
+        new Chart("barplot", {{
+        type: "bar",
+        data: {{
+            labels: xValues,
+            datasets: [{{
+            backgroundColor: barColors,
+            data: yValues
+            }}]
+        }},
+        options: {{
+            legend: {{display: false}},
+            title: {{
+            display: false,
+            }}
+        }} }});
+    """
+    return js_string
+
 
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
@@ -90,20 +113,21 @@ def main(mytimer: func.TimerRequest) -> None:
     df = prepare_df(client)
 
     heatmap = heatmap_func(df)
-    map_bytes_io = BytesIO()
+    map_bytes_io = io.BytesIO()
     heatmap.save(map_bytes_io, close_file=False)
 
     container_client = get_blob_client(container="komootplots")
     container_client.upload_blob("bike_heatmap.html", map_bytes_io.getvalue(),
                                     overwrite=True, content_settings=ContentSettings(content_type="text/html"))
 
-
-    map_bytes_io = BytesIO()
     # Distance bar diagram
-    fix, ax = barplot_func(df.copy())
-    plt.setp(ax.get_xticklabels(), rotation=270, ha='right')
+    plt = barplot_func(df.copy())
 
-    plt.savefig(map_bytes_io)
-    container_client = get_blob_client("komootplots")
-    container_client.upload_blob("bike_barplot.png", map_bytes_io.getvalue(),
+    map_bytes_io = io.BytesIO()
+    StreamWriter = codecs.getwriter('utf-8')
+    wrapper_file = StreamWriter(map_bytes_io)
+    print(plt, file=wrapper_file)    
+
+    container_client = get_blob_client("$web")
+    container_client.upload_blob("assets/js/barplot.js",  map_bytes_io.getvalue(),
                                    overwrite=True) 
