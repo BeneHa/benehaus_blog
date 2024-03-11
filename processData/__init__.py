@@ -47,11 +47,14 @@ def heatmap_func(df):
     LON_MIN = 10.75
     LON_MAX = 12.25
 
-    df3 = df2.groupby(["lat", "lon"]).size().reset_index(name='counts')
+    # sampling to reduce amount of points
+    df_sampled = df2.iloc[::8]
+
+    df3 = df_sampled.groupby(["lat", "lon"]).size().reset_index(name='counts')
     df_np = df3.to_numpy()
 
     hm = folium.Map(location=[(LAT_MIN + LAT_MAX) / 2, (LON_MIN + LON_MAX) / 2], 
-                tiles='stamentoner',
+                tiles='openstreetmap',
                 zoom_start=10)
     HeatMap(df_np, min_opacity=0.4, blur = 3, radius = 3, gradient = {0.4: "blue", 0.7: "lime", 0.9: "red"}).add_to(folium.FeatureGroup(name='Heat Map').add_to(hm))
     folium.LayerControl().add_to(hm)
