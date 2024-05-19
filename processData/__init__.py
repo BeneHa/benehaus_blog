@@ -48,7 +48,7 @@ def heatmap_func(df):
     LON_MAX = 12.25
 
     # sampling to reduce amount of points
-    df_sampled = df2.iloc[::8]
+    df_sampled = df2.iloc[::10]
 
     df3 = df_sampled.groupby(["lat", "lon"]).size().reset_index(name='counts')
     df_np = df3.to_numpy()
@@ -79,27 +79,87 @@ def barplot_func(df):
     df_dist['year_month'] = df_dist["year_month"].astype(str).str.slice(0,7)
 
     df_dist["distance"] = df_dist["distance"] / 1000
-    df_grouped = df_dist.groupby(["year_month"], dropna=False)["distance"].sum().reset_index()
+    df_grouped = df_dist.groupby(["year_month"], dropna=False)[["distance", "elevation_up"]].sum().reset_index()
     df_grouped.distance = df_grouped.distance.round(0)
+    df_grouped.elevation_up = df_grouped.elevation_up.round(0)
 
     js_string = f"""// automatically generated file, do not change here!
         var xValues = {df_grouped["year_month"].tolist()};
         var yValues = {df_grouped["distance"].tolist()};
-        var barColors ="blue";
+        var altValues= {df_grouped["elevation_up"].tolist()};
+        var barColorDist ="blue";
+        var barColorAlt ="grey";
 
         new Chart("barplot", {{
         type: "bar",
         data: {{
             labels: xValues,
             datasets: [{{
-            backgroundColor: barColors,
-            data: yValues
+                label: 'Distance',
+                backgroundColor: barColorDist,
+                data: yValues,
+                yAxisID: 'y-axis-distance'
+            }},
+            {{
+                label: 'Altitude',
+                backgroundColor: barColorAlt,
+                data: altValues.map(value => value / 10),
+                yAxisID: 'y-axis-altitude'
             }}]
         }},
         options: {{
-            legend: {{display: false}},
+            legend: {{display: true}},
             title: {{
             display: false,
+            }},
+            tooltips: {{
+                callbacks: {{
+                    label: function(tooltipItem, data) {{
+                        var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                        var value = tooltipItem.yLabel;
+                        if (tooltipItem.datasetIndex === 1) {{
+                            value = value * 10; // Convert scaled value back to real value
+                            return datasetLabel + ': ' + value + ' m';
+                        }} else {{
+                            return datasetLabel + ': ' + value + ' km';
+                        }}
+                    }}
+                }}
+            }},
+            scales: {{
+                yAxes: [{{
+                    id: 'y-axis-distance',
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {{
+                        beginAtZero: true,
+                        callback: function(value, index, values) {{
+                            return value + ' km';
+                        }}
+                    }},
+                    scaleLabel: {{
+                        display: true,
+                        labelString: 'Distance (km)'
+                    }}
+                }}, {{
+                    id: 'y-axis-altitude',
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {{
+                        beginAtZero: true,
+                        callback: function(value, index, values) {{
+                            return value * 10 + ' m';
+                        }}
+                    }},
+                    scaleLabel: {{
+                        display: true,
+                        labelString: 'Altitude (m)'
+                    }}
+                }}],
+                xAxes: [{{
+                    barPercentage: 1.0,
+                categoryPercentage: 0.5
+                }}]
             }}
         }} }});
     """

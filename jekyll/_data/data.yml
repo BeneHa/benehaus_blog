@@ -103,22 +103,17 @@ skills:
 
     toolset:
       - name: Azure
+        level: 100%
+
+      - name: DevOps
         level: 90%
 
-      - name: Snowflake
-        level: 90%
-
-      - name: Databricks / Spark
-        level: 80%
+      - name: Terraform, Terragrunt
+        level: 75%
 
       - name: Python
         level: 75%
 
-      - name: Terraform
+      - name: Data Engineering & Databases, e.g. Databricks, Spark, ADF, Postgres
         level: 70%
 
-      - name: DevOps
-        level: 70%
-
-      - name: Kafka
-        level: 50%
