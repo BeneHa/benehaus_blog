@@ -1,0 +1,24 @@
+---
+default_language_version:
+    python: python3
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        description: Forces to replace line ending by the UNIX 'lf' character.
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.3
+    hooks:
+      - id: yamlfmt
+        args: [--mapping, '2', --sequence, '4', --offset, '2', --colons, --width, '150']
+
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: 3.2.34
+    hooks:
+      - id: checkov_secrets
+        name: checkov-secret-scan
+        description: Runs the Checkov secret scan on all files in this repository.
