@@ -6,13 +6,13 @@ tags: [sticky]
 ---
 
 
-# Introduction 
+# Introduction
 
 In this blog post I will show you how I set up this blog. It uses the Azure static websites feature of the Blob storage for simple, fast and cheap hosting of the website and Jekyll for creating the blog posts. If you follow along, by the end you will have a website which will automatically be deployed from Github and can be reached on your own domain. So, let's get into it....
 
 ## Jekyll
 
-First, a few words on Jekyll. Jekyll lets you create static websites, so websites without any server-side logic. Jekyll generates a set of HTML, CSS and Javascript files which you can then host anywhere, in our case in the Azure Blob storage. The great thing about Jekyll is that if you want to, you can edit every HTML and CSS element of your webpage if you want to, but if you are less technical you can just use any free theme on the internet and create your own blog writing posts in Markdown.  
+First, a few words on Jekyll. Jekyll lets you create static websites, so websites without any server-side logic. Jekyll generates a set of HTML, CSS and Javascript files which you can then host anywhere, in our case in the Azure Blob storage. The great thing about Jekyll is that if you want to, you can edit every HTML and CSS element of your webpage if you want to, but if you are less technical you can just use any free theme on the internet and create your own blog writing posts in Markdown.
 For this blog I combined two themes: Mundana and online-cv. This can be a bit tricky, if you are new to Jekyll just stick with one theme or the default theme, you can always play around with themes later.
 
 {% include image.html
@@ -96,7 +96,7 @@ jobs:
         account_name: {% raw %}${{ secrets.STORAGE_ACCOUNT_NAME }}{% endraw %}
         overwrite: 'true'
 ```
-I had to change some folder permissions so the built folders could be used by the upload storage task. You can adapt all the paths to however you set up your folders in your repository.  
+I had to change some folder permissions so the built folders could be used by the upload storage task. You can adapt all the paths to however you set up your folders in your repository.
 The task will build the Jekyll page and deploy the folder with the built website code (_site) to the storage account container $web. Ideally, after pushing this file, Github should recognize it and run the deployment job automatically because we set it to trigger on the main branch.
 
 {% include image.html
@@ -111,13 +111,13 @@ Check the results by going to the website at the URL you saw before when setting
     description="The website can be reached, but the URL is quite ugly."
     alt="Blob url" %}
 
-Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done.  
+Yeah, so our website can now be reached from the internet and is automatically deployed as soon as we make a push to the main branch of the repository! Nice work! The first part is now done.
 What we want to change now is the url where the website can be accessed (it still has the ugly long name with .core.windows.net in it).
 
 ## Azure Portal - CDN endpoint
 
-Let's go back to the Azure portal and create a CDN endpoint. Add a resource and search for "Front Door and CDN profiles". Select "Explore other offerings" and "Azure CDN Standard". Again, define a name and click on "Create".  
-Now, got to your CDN profile and click on "+ Endpoint". Select storage static website as origin type and select your storage account from the list in the origin hostname dropdown.  
+Let's go back to the Azure portal and create a CDN endpoint. Add a resource and search for "Front Door and CDN profiles". Select "Explore other offerings" and "Azure CDN Standard". Again, define a name and click on "Create".
+Now, got to your CDN profile and click on "+ Endpoint". Select storage static website as origin type and select your storage account from the list in the origin hostname dropdown.
 
 {% include image.html
     url="/assets/images/blogposts/2022-08-12-blog-setup/12_cdnEndpoint.png"
@@ -160,7 +160,7 @@ In order to check if the CNAME record is live, go to https://dnschecker.org/#CNA
 
 ## Azure portal - adding the domain
 
-Now we go back to the CDN endpoint in the Azure portal, click on "+ Custom domain" and enter "www.bene.haus" as hostname. Azure checks if a CNAME record is set and if so, you can click on "Add".  
+Now we go back to the CDN endpoint in the Azure portal, click on "+ Custom domain" and enter "www.bene.haus" as hostname. Azure checks if a CNAME record is set and if so, you can click on "Add".
 Also, let's add HTTPS to the webpage to follow best practices. In the list of cusotm domains, click on your domain name and set Custom domain HTTPS to On. For this blob I will simply use the certificate provided by Azure. After you click on "Save", it will take a few minutes for the validation to work but afterwards, the website should be reachable on the via https:
 
 {% include image.html
@@ -208,5 +208,5 @@ We are done! Now with every deployment the CDN endpoint will be purged, making s
 
 # Summary
 
-We used Jekyll to generate a static webpage locally, deployed our repository to Github and had it build the page and copy the files to the Azure Blob storage on commits. From there they are served via a CDN endpoint which is linked to our own domain.  
+We used Jekyll to generate a static webpage locally, deployed our repository to Github and had it build the page and copy the files to the Azure Blob storage on commits. From there they are served via a CDN endpoint which is linked to our own domain.
 I hope this post was interesting and it was possible to follow all the steps. Let me know if some parts were too hard to understand! The code for this post is on <a href="https://github.com/BeneHa/benehaus_blog/blob/main/jekyll/_posts/2022-08-08-blog-setup.md">Github</a>.

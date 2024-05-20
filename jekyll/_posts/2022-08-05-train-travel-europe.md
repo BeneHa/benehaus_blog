@@ -12,9 +12,9 @@ One obvious fossil powered industry is airplane travel. There will not be any ba
 I want to share my experience with this train journey with you in this blog post.
 
 First, the route:
-From Munich to Paris, we took the TGV. It stops 5 times on the way and takes about 6 and a half hours.  
-From Paris to London, we took the Eurostar (I think this is the only operator for this route). This takes 2 and a half hours plus one hour time zone difference and does not have any stops on the way.  
-From London to Edinburgh, we took the Scottish/British railway (LNER). Again around 6 hours with a few stops.  
+From Munich to Paris, we took the TGV. It stops 5 times on the way and takes about 6 and a half hours.
+From Paris to London, we took the Eurostar (I think this is the only operator for this route). This takes 2 and a half hours plus one hour time zone difference and does not have any stops on the way.
+From London to Edinburgh, we took the Scottish/British railway (LNER). Again around 6 hours with a few stops.
 The route on the way back was the same, but we took a one day break in London.
 
 {% include image.html
