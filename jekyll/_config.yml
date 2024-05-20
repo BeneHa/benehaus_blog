@@ -1,54 +1,55 @@
+---
 # Site
-name: 'bene.haus'
-description: 'Personal blog of Benedikt Häuser'
-logo: 'assets/images/logo.png'
-favicon: 'assets/images/favicon.ico'
-baseurl: ''
-email: 'benedikt.haeuser@outlook.com'
+name         : bene.haus
+description  : Personal blog of Benedikt Häuser
+logo         : assets/images/logo.png
+favicon      : assets/images/favicon.ico
+baseurl      : ''
+email        : benedikt.haeuser@outlook.com
 
-include: ["_pages"]
-permalink: /:title/
+include      : [_pages]
+permalink    : /:title/
 
 # Plugins
-plugins: 
+plugins      :
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-seo-tag
- 
+
 # Defaults
-defaults:
+defaults     :
 
   # all posts
   - scope:
-      path: "_posts"
+      path: _posts
     values:
       layout: post
-      
+
   # all pages
   - scope:
-      path: "_pages"
+      path: _pages
     values:
       layout: page
-      
+
 # Syntax
-markdown: kramdown
-highlighter: rouge
+markdown     : kramdown
+highlighter  : rouge
 
 # Paginate
-paginate: 10
+paginate     : 10
 
-sass:
+sass         :
   sass_dir: _sass
   style: compressed
 
 # Build settings
 compress-site: yes
-theme_skin: green
+theme_skin   : green
 
-encoding: "utf-8"
+encoding     : utf-8
 compress_html: # - http://jch.penibelst.de/
   clippings: all
 
 # Exclude metadata and development time dependencies (like Grunt plugins)
-exclude: [README.markdown, package.json, grunt.js, Gruntfile.js, Gruntfile.coffee, node_modules, vendor]
+exclude      : [README.markdown, package.json, grunt.js, Gruntfile.js, Gruntfile.coffee, node_modules, vendor]

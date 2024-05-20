@@ -3,13 +3,13 @@ title: "Postgres reading notes"
 image:
 categories: [ Databases ]
 ---
- 
+
 # Intro
- 
+
 I am currently reading the book [Mastering PostgreSQL 15](https://www.amazon.de/Mastering-PostgreSQL-techniques-fault-tolerant-applications/dp/1803248343/ref=sr_1_1?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1Y8H2UUXJYZOY&keywords=mastering+postgres+15&qid=1694781954&sprefix=mastering+postgresql+15%2Caps%2C88&sr=8-1) in order to get a better understanding of this specific database technology. In the past I was working more with analytical/OLAP-oriented databases like Snowflake, but now OLTP databases are more important to my current job, so I decided to start getting into that with Postgres. I will share my reading notes here.
- 
+
 # Transactions and Locking
- 
+
 - transaction chaining using COMMIT AND CHAIN
 - savepoints using SAVEPOINT abc
 - most DDL statements are transactional!
