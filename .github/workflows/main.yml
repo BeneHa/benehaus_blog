@@ -1,40 +1,41 @@
+---
 name: Build and deploy Jekyll site to Azure Blob static page
 
-on:
+on  :
   push:
     branches:
-      - 'main'
+      - main
 
 jobs:
   jekyll:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/jekyll/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    - uses: helaili/jekyll-action@v2
-      with:
-        jekyll_src: 'jekyll'
-        target_path: '_site'
-        build_dir: '_site'
-        build_only: 'true'
-    - name: chmod
-      run: sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
-    - uses: bacongobbler/azure-blob-storage-upload@main
-      with:
-        cli_version: 2.34.1
-        source_dir: 'jekyll/_site/_site/'
-        container_name: '$web'
-        sas_token: ${{ secrets.SAS_TOKEN }}
-        account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
-        overwrite: 'true'
-    - name: Azure Login
-      uses: Azure/login@v1.4.3
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - run: |
-        az cdn endpoint purge -g benehaus-blog-rg -n benehausblogendpoint --profile-name benehaus-blog-cdn --content-paths '/*'
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/jekyll/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - uses: helaili/jekyll-action@v2
+        with:
+          jekyll_src: jekyll
+          target_path: _site
+          build_dir: _site
+          build_only: 'true'
+      - name: chmod
+        run: sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
+      - uses: bacongobbler/azure-blob-storage-upload@main
+        with:
+          cli_version: 2.34.1
+          source_dir: jekyll/_site/_site/
+          container_name: $web
+          sas_token: ${{ secrets.SAS_TOKEN }}
+          account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+          overwrite: 'true'
+      - name: Azure Login
+        uses: Azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - run: |
+          az cdn endpoint purge -g benehaus-blog-rg -n benehausblogendpoint --profile-name benehaus-blog-cdn --content-paths '/*'

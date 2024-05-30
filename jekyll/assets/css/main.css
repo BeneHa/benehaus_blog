@@ -68,7 +68,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   font-weight: normal;
   src: url('../fonts/segoe-ui/Segoe\ UI.woff') format('woff');
   }
-  
+
 
   @font-face {
   font-family: 'Segoe UI Italic';
@@ -76,7 +76,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   font-weight: normal;
   src:  url('../fonts/segoe-ui/Segoe\ UI\ Italic.woff') format('woff');
   }
-  
+
 
   @font-face {
   font-family: 'Segoe UI Bold';
@@ -84,7 +84,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   font-weight: normal;
   src: url('../fonts/segoe-ui/Segoe\ UI\ Bold.woff') format('woff');
   }
-  
+
 
   @font-face {
   font-family: 'Segoe UI Bold Italic';
@@ -181,7 +181,7 @@ a {
   color: #000000;
   text-decoration: underline;
   background-color: transparent;
-  -webkit-text-decoration-skip: objects; 
+  -webkit-text-decoration-skip: objects;
 
 }
 
@@ -475,7 +475,7 @@ kbd {
     font-size: 100%;
     font-weight: 700; }
 
-pre {    
+pre {
     background: #eee;
     padding: 5px;
     font-size:14px;
@@ -3329,7 +3329,7 @@ input[type="button"].btn-block {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
     }
   .nav-scale {
     width: 30vw;
@@ -3799,7 +3799,7 @@ input[type="button"].btn-block {
   display: flex;
   padding-left: 0;
   list-style: none;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
   font-size: 14px;
   font-weight: 600;
 }
@@ -4759,7 +4759,7 @@ button.close {
   .bs-popover-top .arrow::before, .bs-popover-auto[x-placement^="top"] .arrow::before {
     bottom: 0;
     border-top-color: rgba(0, 0, 0, 0.25); }
-  
+
   .bs-popover-top .arrow::after,
   .bs-popover-auto[x-placement^="top"] .arrow::after {
     bottom: 1px;
@@ -4779,7 +4779,7 @@ button.close {
   .bs-popover-right .arrow::before, .bs-popover-auto[x-placement^="right"] .arrow::before {
     left: 0;
     border-right-color: rgba(0, 0, 0, 0.25); }
-  
+
   .bs-popover-right .arrow::after,
   .bs-popover-auto[x-placement^="right"] .arrow::after {
     left: 1px;
@@ -4796,7 +4796,7 @@ button.close {
   .bs-popover-bottom .arrow::before, .bs-popover-auto[x-placement^="bottom"] .arrow::before {
     top: 0;
     border-bottom-color: rgba(0, 0, 0, 0.25); }
-  
+
   .bs-popover-bottom .arrow::after,
   .bs-popover-auto[x-placement^="bottom"] .arrow::after {
     top: 1px;
@@ -4825,7 +4825,7 @@ button.close {
   .bs-popover-left .arrow::before, .bs-popover-auto[x-placement^="left"] .arrow::before {
     right: 0;
     border-left-color: rgba(0, 0, 0, 0.25); }
-  
+
   .bs-popover-left .arrow::after,
   .bs-popover-auto[x-placement^="left"] .arrow::after {
     right: 1px;

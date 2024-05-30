@@ -19,7 +19,7 @@ class BasicAuthToken(requests.auth.AuthBase):
         ).decode("utf-8")
         r.headers["Authorization"] = authstr
         return r
-        
+
 class KomootApi:
     def __init__(self):
         self.user_id = ""
@@ -115,7 +115,7 @@ class KomootApi:
         )
 
         return r.json()
-    
+
 
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
@@ -140,5 +140,5 @@ def main(mytimer: func.TimerRequest) -> None:
                      ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
     for t in missing_tours:
         tour_details = api.fetch_tour(str(t))
-        
+
         container_client.upload_blob(data=json.dumps(tour_details), name=f"tours/{t}.json")
