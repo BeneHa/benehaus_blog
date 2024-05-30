@@ -1,0 +1,2 @@
+[tools]
+pre-commit = 'prefix:3'
