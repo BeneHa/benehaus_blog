@@ -8,8 +8,6 @@ on  :
       - main
 
 jobs:
-  jekyll:
-    runs-on: ubuntu-20.04
   deploy:
     runs-on: ubuntu-latest
     steps:
