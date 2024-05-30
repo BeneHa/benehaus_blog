@@ -1,12 +1,15 @@
 ---
 name: Build and deploy website and functions
 
+
 on  :
   push:
     branches:
       - main
 
 jobs:
+  jekyll:
+    runs-on: ubuntu-20.04
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +42,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - run: |
           az cdn endpoint purge -g benehaus-blog-rg -n benehausblogendpoint --profile-name benehaus-blog-cdn --content-paths '/*'
-
       - name: Resolve Project Dependencies Using Pip
         shell: bash
         run: |

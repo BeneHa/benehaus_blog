@@ -26,7 +26,7 @@
     {% endif %}
 
     {% if sidebar.certly %}
-    <li class="xing"><img src="assets/images/icons/certly.png" style="padding-right: 4%"></i>
+    <li class="xing"><img src="assets/images/icons/certly.png" style="padding-right: 2%"></i>
       <a href="https://www.credly.com/users/{{ sidebar.certly }}/badges" target="_blank">certly</a>
     </li>
     {% endif %}
@@ -43,17 +43,6 @@
     </li>
     {% endif %}
 
-    {% if sidebar.gitlab %}
-    <li class="gitlab"><i class="fab fa-gitlab"></i>
-      <a href="http://gitlab.com/{{ sidebar.gitlab }}" target="_blank">{{ sidebar.gitlab }}</a>
-    </li>
-    {% endif %}
-
-    {% if sidebar.bitbucket %}
-    <li class="bitbucket"><i class="fab fa-bitbucket"></i>
-      <a href="http://bitbucket.com/{{ sidebar.bitbucket }}" target="_blank">{{ sidebar.bitbucket }}</a>
-    </li>
-    {% endif %}
 
     {% if sidebar.twitter %}
     <li class="twitter"><i class="fab fa-twitter"></i>
@@ -61,38 +50,9 @@
     </li>
     {% endif %}
 
-    {% if sidebar.stack-overflow %}
-    <li class="stack-overflow"><i class="fab fa-stack-overflow"></i>
-      <a href="https://stackoverflow.com/users/{{ sidebar.stack-overflow }}" target="_blank">{{ sidebar.stack-overflow }}</a>
-    </li>
-    {% endif %}
-
-    {% if sidebar.codewars %}
-    <li class="codewars"><i class="fas fa-code"></i>
-      <a href="https://www.codewars.com/users/{{ sidebar.codewars }}/completed_solutions" target="_blank">{{ sidebar.codewars }}</a>
-    </li>
-    {% endif %}
-
-    {% if sidebar.goodreads %}
-    <li class="goodreads-g"><i class="fab fa-goodreads-g"></i>
-      <a href="https://www.goodreads.com/user/show/{{ sidebar.goodreads }}" target="_blank">{{ sidebar.goodreads }}</a>
-    </li>
-    {% endif %}
-
     {% if sidebar.komoot %}
-    <li class="goodreads-g"><img src="assets/images/icons/komoot.png" style="padding-right: 4%"></i>
+    <li class="goodreads-g"><img src="assets/images/icons/komoot.png" style="padding-right: 2%"></i>
       <a href="https://www.komoot.de/user/{{ sidebar.komoot['userid'] }}" target="_blank">Komoot</a>
-    {% endif %}
-
-    {% if sidebar.pdf %}
-    <li class="pdf"><i class="fas fa-file-pdf"></i>
-      <a href="{{ sidebar.pdf }}" target="_blank">Resume PDF</a>
-    </li>
-    {% endif %}
-
-    {% if sidebar.mastodon %}
-    <li class="goodreads-g"><i class="fab fa-mastodon"></i>
-      <a rel="me" href="https://{{ sidebar.mastodon['instance'] }}{{ sidebar.mastodon['handle'] }}">Mastodon</a>
     {% endif %}
 
   </ul>

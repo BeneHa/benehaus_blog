@@ -1,6 +1,4 @@
 ---
-default_language_version:
-    python: python3.9
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -22,3 +20,9 @@ repos:
       - id: checkov_secrets
         name: checkov-secret-scan
         description: Runs the Checkov secret scan on all files in this repository.
+
+  - repo: https://github.com/thibaudcolas/curlylint
+    rev: v0.13.1
+    hooks:
+      - id: curlylint
+        name: curlylint

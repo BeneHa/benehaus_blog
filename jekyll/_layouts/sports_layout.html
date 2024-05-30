@@ -1,5 +1,9 @@
+---
+---
 <!DOCTYPE html>
-<html lang="en">
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,36 +26,36 @@
     <!-- Theme Stylesheet -->
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/custom.css">
 
+    <!-- Theme Stylesheet -->
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/cv.css">
+
+
 
     <!-- Jquery on header to make sure everything works, the rest  of the scripts in footer for fast loading -->
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-
 </head>
 
-<body class="{% if page.url == "/" %} homefirstpage {% endif %}">
+<body>
 
     {% include navbar.html %}
 
-    <!-- Content -->
-    <main role="main" class="site-content">
+  <div class="cv_wrapper">
+  <div class="wrapper">
+
+    <div class="main-wrapper" >
         {{ content }}
-    </main>
-
-
-    <!-- Scripts: popper, bootstrap, theme, lunr -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </div>
+  </div>
+</div>
 
 
 
+{% include footer.html %}
 
-    {% include footer.html %}
-
-
-    {% include scripts.html %}
+{% include scripts.html %}
 </body>
 
 </html>

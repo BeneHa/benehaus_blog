@@ -96,7 +96,7 @@ projects      :
     In my free time I try to do something interesting and worthwile.
   assignments:
     - title: Cooperative Rieselbar
-      link: www.rieselbar.de/lang/en/index.html
+      link: https://www.rieselbar.de/lang/en/index.html
       tagline: We try to open a zero packaging store in the north of Munich.
 
 skills        :
