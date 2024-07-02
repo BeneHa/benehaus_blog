@@ -2,10 +2,11 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "name": "mytimer",
-      "type": "timerTrigger",
+      "name": "myblob",
+      "type": "blobTrigger",
       "direction": "in",
-      "schedule": "1 1 21 * * *"
+      "path": "komootdata/tours/{name}",
+      "connection":"blobtriggerconnection"
     }
   ]
 }
