@@ -98,15 +98,35 @@ resource "azurerm_linux_function_app" "this" {
   service_plan_id            = azurerm_service_plan.this.id
 
   site_config {
+    application_insights_connection_string = azurerm_application_insights.this.connection_string
+    application_stack {
+      python_version = "3.12"
+    }
   }
 
   app_settings = {
-    blob_storage_name = azurerm_storage_account.this.name
     blobtriggerconnection__blobServiceUri = azurerm_storage_account.this.primary_blob_endpoint
     blobtriggerconnection__credential = "managedidentity"
     blobtriggerconnection__queueServiceUri = azurerm_storage_account.this.primary_queue_endpoint
     komoot_password = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_username.name})"
     komoot_username = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_password.name})"
+  }
+
+
+  lifecycle {
+    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE ]
+  }
+}
+
+resource "azurerm_monitor_diagnostic_setting" "this" {
+  name = "diagsettingfunc"
+  target_resource_id = azurerm_linux_function_app.this.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
+  enabled_log {
+    category = "FunctionAppLogs"
+  }
+  metric {
+    category = "AllMetrics"
   }
 }
 
@@ -122,4 +142,10 @@ resource "azurerm_role_assignment" "key_vault" {
     scope = azurerm_key_vault.this.id
     principal_id = azurerm_linux_function_app.this.identity[0].principal_id
     role_definition_name = "Key Vault Secrets User"
+}
+
+resource "azurerm_role_assignment" "storage_sp" {
+    scope = azurerm_storage_account.this.id
+    principal_id = local.sp_id
+    role_definition_name = "Storage Blob Data Contributor"
 }
