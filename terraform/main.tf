@@ -100,7 +100,7 @@ resource "azurerm_linux_function_app" "this" {
   site_config {
     application_insights_connection_string = azurerm_application_insights.this.connection_string
     application_stack {
-      python_version = "3.12"
+      python_version = "3.9"
     }
   }
 
@@ -141,6 +141,12 @@ resource "azurerm_role_assignment" "queue" {
     scope = azurerm_storage_account.this.id
     principal_id = azurerm_linux_function_app.this.identity[0].principal_id
     role_definition_name = "Storage Queue Data Contributor"
+}
+
+resource "azurerm_role_assignment" "owner" {
+    scope = azurerm_storage_account.this.id
+    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    role_definition_name = "Storage Account Contributor"
 }
 
 # Circle dependency, apply with target on re-create
