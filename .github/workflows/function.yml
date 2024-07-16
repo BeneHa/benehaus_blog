@@ -10,13 +10,17 @@ on  :
     
 jobs:
   deploy:
+    environment: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Azure Login
         uses: Azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+
       - name: Resolve Project Dependencies Using Pip
         shell: bash
         run: |

@@ -2,7 +2,7 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "name": "blobtriggerconnection",
+      "name": "blobname",
       "type": "blobTrigger",
       "direction": "in",
       "path": "komootdata/tours/{name}",

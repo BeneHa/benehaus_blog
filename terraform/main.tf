@@ -105,16 +105,16 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   app_settings = {
-    blobtriggerconnection__blobServiceUri = azurerm_storage_account.this.primary_blob_endpoint
-    blobtriggerconnection__credential = "managedidentity"
-    blobtriggerconnection__queueServiceUri = azurerm_storage_account.this.primary_queue_endpoint
+    blobtriggerconnection__blobServiceUri = trimsuffix(azurerm_storage_account.this.primary_blob_endpoint, "/")
+    #blobtriggerconnection__credential = "managedidentity"
+    blobtriggerconnection__queueServiceUri = trimsuffix(azurerm_storage_account.this.primary_queue_endpoint, "/")
     komoot_password = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_username.name})"
     komoot_username = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_password.name})"
   }
 
 
   lifecycle {
-    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE ]
+    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE, tags ]
   }
 }
 
@@ -134,7 +134,13 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 resource "azurerm_role_assignment" "storage" {
     scope = azurerm_storage_account.this.id
     principal_id = azurerm_linux_function_app.this.identity[0].principal_id
-    role_definition_name = "Storage Blob Data Contributor"
+    role_definition_name = "Storage Blob Data Owner"
+}
+
+resource "azurerm_role_assignment" "queue" {
+    scope = azurerm_storage_account.this.id
+    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    role_definition_name = "Storage Queue Data Contributor"
 }
 
 # Circle dependency, apply with target on re-create
