@@ -167,7 +167,7 @@ def barplot_func(df):
 
 
 def main(myblob: func.InputStream) -> None:
-    utc_timestamp = datetime.datetime.utcnow().replace(
+    utc_timestamp = datetime.datetime.now(datetime.UTC).replace(
         tzinfo=datetime.timezone.utc).isoformat()
     print(utc_timestamp)
 

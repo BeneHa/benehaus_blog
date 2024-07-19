@@ -100,7 +100,7 @@ resource "azurerm_linux_function_app" "this" {
   site_config {
     application_insights_connection_string = azurerm_application_insights.this.connection_string
     application_stack {
-      python_version = "3.9"
+      python_version = "3.11"
     }
   }
 
