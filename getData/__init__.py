@@ -125,14 +125,15 @@ def main(mytimer: func.TimerRequest) -> None:
 
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
-    logging.info("Default azure credential was fetched.")
+    logging.debug("Default azure credential was fetched.")
     client = BlobServiceClient(f"https://{os.environ['AzureWebJobsStorage__accountName']}.blob.core.windows.net/", credential=default_credential)
     container_client = client.get_container_client(container="komootdata")
+    logging.debug("Created container client.")
 
     # set up api and login
     api = KomootApi()
     api.login(os.environ["komoot_username"], os.environ["komoot_password"])
-    logging.info("Logged in to komoot successfully.")
+    logging.debug("Logged in to komoot successfully.")
 
     # get all tours and fetch details for each
     saved_tours = [n['name'].split('/')[1].replace('.json', '') for n in container_client.list_blobs(name_starts_with="tours/")]
@@ -143,6 +144,6 @@ def main(mytimer: func.TimerRequest) -> None:
                      ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
     for t in missing_tours:
         tour_details = api.fetch_tour(str(t))
-        logging.info(f"Downloading tour {str(t)}")
+        logging.debug(f"Downloading tour {str(t)}")
 
         container_client.upload_blob(data=json.dumps(tour_details), name=f"tours/{t}.json")
