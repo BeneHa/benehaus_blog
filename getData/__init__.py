@@ -126,7 +126,7 @@ def main(mytimer: func.TimerRequest) -> None:
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
     logging.debug("Default azure credential was fetched.")
-    client = BlobServiceClient(f"https://{os.environ['AzureWebJobsStorage__accountName']}.blob.core.windows.net/", credential=default_credential)
+    client = BlobServiceClient(os.environ['storage_account_name'], credential=default_credential)
     container_client = client.get_container_client(container="komootdata")
     logging.debug("Created container client.")
 

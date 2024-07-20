@@ -111,6 +111,7 @@ resource "azurerm_linux_function_app" "this" {
     blobtriggerconnection__queueServiceUri = trimsuffix(azurerm_storage_account.this.primary_queue_endpoint, "/")
     komoot_password = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_username.name})"
     komoot_username = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_password.name})"
+    storage_account_name = azurerm_storage_account.this.primary_blob_endpoint
   }
 
 
