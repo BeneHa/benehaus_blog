@@ -123,36 +123,27 @@ def main(mytimer: func.TimerRequest) -> None:
         tzinfo=datetime.timezone.utc).isoformat()
     logging.info(f"Started function at {utc_timestamp}.")
 
-    try:
-        # Initialize DefaultAzureCredential
-        default_credential = DefaultAzureCredential()
-        logging.debug("Default Azure Credential was fetched.")
-        
-        # Construct the blob service client using the storage account URL and credential
-        storage_account_url = f"https://{os.environ['storage_account_name']}.blob.core.windows.net"
-        client = BlobServiceClient(account_url=storage_account_url, credential=default_credential)
-        container_client = client.get_container_client(container="komootdata")
-        logging.debug("Created container client.")
-        
-        # Set up API and login
-        api = KomootApi()
-        api.login(os.environ["komoot_username"], os.environ["komoot_password"])
-        logging.debug("Logged in to Komoot successfully.")
-        
-        # Get all tours and fetch details for each
-        saved_tours = [n['name'].split('/')[1].replace('.json', '') for n in container_client.list_blobs(name_starts_with="tours/")]
-        tours = api.fetch_tours()
-        missing_tours = {k:v for (k,v) in tours.items() if
-                         str(k) not in saved_tours and
-                         "tour_recorded" in v and
-                         ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
-        
-        for t in missing_tours:
-            tour_details = api.fetch_tour(str(t))
-            logging.debug(f"Downloading tour {str(t)}")
-            
-            container_client.upload_blob(data=json.dumps(tour_details), name=f"tours/{t}.json")
-        logging.info("Function executed successfully.")
-    
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
+    # blob client, use managed identity
+    default_credential = DefaultAzureCredential()
+    logging.info("Default azure credential was fetched.")
+    client = BlobServiceClient(os.environ['storage_account_name'], credential=default_credential)
+    container_client = client.get_container_client(container="komootdata")
+    logging.info("Created container client.")
+
+    # set up api and login
+    api = KomootApi()
+    api.login(os.environ["komoot_username"], os.environ["komoot_password"])
+    logging.info("Logged in to komoot successfully.")
+
+    # get all tours and fetch details for each
+    saved_tours = [n['name'].split('/')[1].replace('.json', '') for n in container_client.list_blobs(name_starts_with="tours/")]
+    tours = api.fetch_tours()
+    missing_tours = {k:v for (k,v) in tours.items() if
+                     str(k) not in saved_tours and
+                     "tour_recorded" in v and
+                     ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
+    for t in missing_tours:
+        tour_details = api.fetch_tour(str(t))
+        logging.info(f"Downloading tour {str(t)}")
+
+        container_client.upload_blob(data=json.dumps(tour_details), name=f"tours/{t}.json")
