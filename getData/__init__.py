@@ -47,12 +47,16 @@ class KomootApi:
         return r
 
     def login(self, email, password):
-        print("Logging in...")
+        logging.info("Logging in to komoot")
 
-        r = self.__send_request(
-            "https://api.komoot.de/v006/account/email/" + email + "/",
-            BasicAuthToken(email, password),
-        )
+        try:
+            logging.info(f"user: {email}, pw: {password}")
+            r = self.__send_request(
+                "https://api.komoot.de/v006/account/email/" + email + "/",
+                BasicAuthToken(email, password),
+            )
+        except Exception as e:
+            logging.error(str(e))
 
         self.user_id = r.json()["username"]
         self.token = r.json()["password"]
