@@ -87,6 +87,7 @@ resource "azurerm_linux_function_app" "this" {
   name                = "behablogfunction"
   resource_group_name = azurerm_resource_group.this.name
   location            = "westeurope"
+  daily_memory_time_quota = 1
 
   identity {
     type = "SystemAssigned"
