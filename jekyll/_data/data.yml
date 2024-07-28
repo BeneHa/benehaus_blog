@@ -45,8 +45,8 @@ career-profile:
     On this blog I write whatever comes to my mind, but I am not sure yet how often I will write something here.
 
 bike-heatmap  :
-  title: Bike Heatmap
-  summary: A heatmap of all my bike tracks driven based on komoot GPS data.
+  title: Bike and sports Heatmap
+  summary: A heatmap of all my bike and other sports tracks based on komoot GPS data.
 
 bike-barplot  :
   title: Biking distances
