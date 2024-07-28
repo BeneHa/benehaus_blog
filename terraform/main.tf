@@ -127,9 +127,6 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   enabled_log {
     category = "FunctionAppLogs"
   }
-  metric {
-    category = "AllMetrics"
-  }
 }
 
 # Circle dependency, apply with target on re-create

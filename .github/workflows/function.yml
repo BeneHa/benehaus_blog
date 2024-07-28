@@ -1,18 +1,18 @@
 ---
-name: Build and deploy functions
+name       : Build and deploy functions
 
 permissions:
-      id-token: write
-      contents: read
+  id-token: write
+  contents: read
 
 
-on  :
+on         :
   push:
     branches:
       - main
   workflow_dispatch:
-    
-jobs:
+
+jobs       :
   deploy:
     environment: deploy
     runs-on: ubuntu-latest

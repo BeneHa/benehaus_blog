@@ -70,7 +70,7 @@ class KomootApi:
         r = self.__send_request(
             "https://api.komoot.de/v007/users/"
             + self.user_id
-            + "/tours/?limit=1000&format=coordinate_array",
+            + "/tours/?limit=3000&format=coordinate_array",
             BasicAuthToken(self.user_id, self.token),
         )
 
@@ -145,7 +145,7 @@ def main(mytimer: func.TimerRequest) -> None:
     missing_tours = {k:v for (k,v) in tours.items() if
                      str(k) not in saved_tours and
                      "tour_recorded" in v and
-                     ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
+                     ("jogging" not in v)}
     for t in missing_tours:
         tour_details = api.fetch_tour(str(t))
         logging.info(f"Downloading tour {str(t)}")
