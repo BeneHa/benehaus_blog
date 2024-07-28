@@ -1,2 +1,3 @@
 [tools]
 pre-commit = 'prefix:3'
+azure-cli = 'prefix:2'

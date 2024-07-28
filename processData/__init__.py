@@ -17,7 +17,7 @@ from azure.storage.blob import BlobServiceClient, ContentSettings
 def get_blob_client(container):
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
-    client = BlobServiceClient(f"https://{os.environ['blob_storage_name']}.blob.core.windows.net/", credential=default_credential)
+    client = BlobServiceClient(f"https://{os.environ['AzureWebJobsStorage__accountName']}.blob.core.windows.net/", credential=default_credential)
     return client.get_container_client(container=container)
 
 def prepare_df(container_client):
@@ -28,6 +28,15 @@ def prepare_df(container_client):
     for t in saved_tours:
         tour_data = json.load(container_client.download_blob(blob=t))
         tour_data = {k:v for (k,v) in tour_data.items() if k in ["date", "name", "sport", "_embedded", "elevation_up", "duration", "distance"]}
+
+        if tour_data["sport"] in ["bike", "bike touring", "bicycle", "gravel", "mtb_easy", "racebike", "touringbicycle", "mtb"]:
+            tour_data["sport"] = "biking"
+        elif tour_data["sport"] in ["hiking", "mountaineering", "hike"]:
+            tour_data["sport"] = "hiking"
+        elif tour_data["sport"] in ["skitour"]:
+            tour_data["sport"] = "skitour"
+        else:
+            tour_data["sport"] = "other"
         tour_data["coordinates"] = tour_data["_embedded"]["coordinates"]["items"]
         tour_data.pop("_embedded")
         if tour_data["duration"] > 1800:
@@ -36,7 +45,6 @@ def prepare_df(container_client):
 
 def heatmap_func(df):
     df2 = df.explode("coordinates")
-    x = df2.coordinates.str
     df2["lat"] = df2.coordinates.str["lat"]
     df2["lon"] = df2.coordinates.str["lng"]
 
@@ -48,18 +56,35 @@ def heatmap_func(df):
     LON_MAX = 12.25
 
     # sampling to reduce amount of points
-    df_sampled = df2.iloc[::10]
+    df_sampled = df2.iloc[::15]
 
-    df3 = df_sampled.groupby(["lat", "lon"]).size().reset_index(name='counts')
-    df_np = df3.to_numpy()
+    sport_colors = {
+        "biking": "rgba(0, 0, 255, 0.4)",       # Blue
+        "hiking": "rgba(255, 0, 0, 0.4)",         # Red
+        "skitour": "rgba(0, 255, 0, 0.6)",  # Pink
+        "other": "rgba(255, 165, 0, 0.4)"     # Orange
+    }
 
     hm = folium.Map(location=[(LAT_MIN + LAT_MAX) / 2, (LON_MIN + LON_MAX) / 2],
-                tiles='openstreetmap',
-                zoom_start=10)
-    HeatMap(df_np, min_opacity=0.4, blur = 3, radius = 3, gradient = {0.4: "blue", 0.7: "lime", 0.9: "red"}).add_to(folium.FeatureGroup(name='Heat Map').add_to(hm))
+                    tiles='openstreetmap',
+                    zoom_start=10)
+
+    # Group by date and sport
+    grouped = df_sampled.groupby(['date', 'sport'])
+    sport_groups = {sport: folium.FeatureGroup(name=sport, show=True) for sport in sport_colors.keys()}
+
+    for (date, sport), group in grouped:
+        coordinates = list(zip(group['lat'], group['lon']))
+        if len(coordinates) > 1:
+            folium.PolyLine(locations=coordinates, color=sport_colors.get(sport, 'black'), weight=2.5, opacity=1).add_to(sport_groups[sport])
+
+    for sport, group in sport_groups.items():
+        group.add_to(hm)
+
     folium.LayerControl().add_to(hm)
 
     return hm
+
 
 
 def barplot_func(df):
@@ -167,9 +192,8 @@ def barplot_func(df):
 
 
 def main(myblob: func.InputStream) -> None:
-    utc_timestamp = datetime.datetime.utcnow().replace(
+    utc_timestamp = datetime.datetime.now(datetime.UTC).replace(
         tzinfo=datetime.timezone.utc).isoformat()
-    print(utc_timestamp)
 
     # Preparation
     client = get_blob_client("komootdata")

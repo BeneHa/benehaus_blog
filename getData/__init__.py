@@ -1,4 +1,5 @@
 import datetime
+import logging
 import requests
 import base64
 import json
@@ -46,12 +47,16 @@ class KomootApi:
         return r
 
     def login(self, email, password):
-        print("Logging in...")
+        logging.info("Logging in to komoot")
 
-        r = self.__send_request(
-            "https://api.komoot.de/v006/account/email/" + email + "/",
-            BasicAuthToken(email, password),
-        )
+        try:
+            logging.info(f"user: {email}, pw: {password}")
+            r = self.__send_request(
+                "https://api.komoot.de/v006/account/email/" + email + "/",
+                BasicAuthToken(email, password),
+            )
+        except Exception as e:
+            logging.error(str(e))
 
         self.user_id = r.json()["username"]
         self.token = r.json()["password"]
@@ -65,7 +70,7 @@ class KomootApi:
         r = self.__send_request(
             "https://api.komoot.de/v007/users/"
             + self.user_id
-            + "/tours/?limit=1000&format=coordinate_array",
+            + "/tours/?limit=3000&format=coordinate_array",
             BasicAuthToken(self.user_id, self.token),
         )
 
@@ -120,16 +125,19 @@ class KomootApi:
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
-    print(utc_timestamp)
+    logging.info(f"Started function at {utc_timestamp}.")
 
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
-    client = BlobServiceClient(f"https://{os.environ['blob_storage_name']}.blob.core.windows.net/", credential=default_credential)
+    logging.info("Default azure credential was fetched.")
+    client = BlobServiceClient(os.environ['storage_account_name'], credential=default_credential)
     container_client = client.get_container_client(container="komootdata")
+    logging.info("Created container client.")
 
     # set up api and login
     api = KomootApi()
     api.login(os.environ["komoot_username"], os.environ["komoot_password"])
+    logging.info("Logged in to komoot successfully.")
 
     # get all tours and fetch details for each
     saved_tours = [n['name'].split('/')[1].replace('.json', '') for n in container_client.list_blobs(name_starts_with="tours/")]
@@ -137,8 +145,9 @@ def main(mytimer: func.TimerRequest) -> None:
     missing_tours = {k:v for (k,v) in tours.items() if
                      str(k) not in saved_tours and
                      "tour_recorded" in v and
-                     ("bike" in v or "bicycle" in v or "gravel" in v or "mtb_easy" in v)}
+                     ("jogging" not in v)}
     for t in missing_tours:
         tour_details = api.fetch_tour(str(t))
+        logging.info(f"Downloading tour {str(t)}")
 
         container_client.upload_blob(data=json.dumps(tour_details), name=f"tours/{t}.json")

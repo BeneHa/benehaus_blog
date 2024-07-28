@@ -6,3 +6,10 @@ __queuestorage__
 local.settings.json
 test
 .venv
+jekyll
+terraform
+Dockerfile
+.pre-commit-config.yaml
+.gitignore
+README.md
+.mise.toml
