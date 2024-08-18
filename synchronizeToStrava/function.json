@@ -6,7 +6,7 @@
       "type": "blobTrigger",
       "direction": "in",
       "path": "komootdata/tours/{name}",
-      "connection":"blobtriggerconnection"
+      "connection":"blobtriggerconnection2"
     }
   ]
 }
