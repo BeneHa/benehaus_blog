@@ -42,15 +42,15 @@ def translate_sport(komoot_sport:str):
         return "AlpineSki"
 
 
-def main(mytimer: func.TimerRequest) -> None:
-
+def main(myblob: func.InputStream) -> None:
+    logging.info(f"Running for new blob {myblob}")
     # blob client, use managed identity
     default_credential = DefaultAzureCredential()
     blob_client = BlobServiceClient(os.environ['storage_account_name'], credential=default_credential)
     container_client = blob_client.get_container_client(container="komootdata")
 
-    # DEMO
-    route = json.loads(container_client.download_blob("tours/1760939931.json").readall())
+    file_path = myblob.name.replace("komootdata/", "")
+    route = json.loads(container_client.download_blob(file_path).readall())
 
     # Read strava information from key-vault backed env secrets
     strava_access_token, strava_refresh_token = get_strava_token(os.environ["strava_userid"], os.environ["strava_client_secret"], os.environ["strava_refresh_token"])
