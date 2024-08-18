@@ -83,6 +83,36 @@ resource "azurerm_key_vault_secret" "komoot_password" {
     }
 }
 
+resource "azurerm_key_vault_secret" "strava_userid" {
+    name = "strava-userid"
+    value = "change_manually"
+    key_vault_id = azurerm_key_vault.this.id
+    depends_on = [ azurerm_role_assignment.personal ]
+    lifecycle {
+      ignore_changes = [ value ]
+    }
+}
+
+resource "azurerm_key_vault_secret" "strava_client_secret" {
+    name = "strava-client-secret"
+    value = "change_manually"
+    key_vault_id = azurerm_key_vault.this.id
+    depends_on = [ azurerm_role_assignment.personal ]
+    lifecycle {
+      ignore_changes = [ value ]
+    }
+}
+
+resource "azurerm_key_vault_secret" "strava_refresh_token" {
+    name = "strava-refresh-token"
+    value = "change_manually"
+    key_vault_id = azurerm_key_vault.this.id
+    depends_on = [ azurerm_role_assignment.personal ]
+    lifecycle {
+      ignore_changes = [ value ]
+    }
+}
+
 resource "azurerm_linux_function_app" "this" {
   name                = "behablogfunction"
   resource_group_name = azurerm_resource_group.this.name
@@ -112,11 +142,15 @@ resource "azurerm_linux_function_app" "this" {
     komoot_password = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_password.name})"
     komoot_username = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.komoot_username.name})"
     storage_account_name = azurerm_storage_account.this.primary_blob_endpoint
+    strava_userid = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_userid.name})"
+    strava_client_secret = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_client_secret.name})"
+    strava_refresh_token = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_refresh_token.name})"
+    key_vault_url = azurerm_key_vault.this.vault_uri
   }
 
 
   lifecycle {
-    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE, tags ]
+    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE, tags, daily_memory_time_quota ]
   }
 }
 
@@ -126,6 +160,9 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
   enabled_log {
     category = "FunctionAppLogs"
+  }
+  lifecycle {
+    ignore_changes = [ metric ]
   }
 }
 
@@ -152,7 +189,7 @@ resource "azurerm_role_assignment" "owner" {
 resource "azurerm_role_assignment" "key_vault" {
     scope = azurerm_key_vault.this.id
     principal_id = azurerm_linux_function_app.this.identity[0].principal_id
-    role_definition_name = "Key Vault Secrets User"
+    role_definition_name = "Key Vault Secrets Officer"
 }
 
 resource "azurerm_role_assignment" "storage_sp" {

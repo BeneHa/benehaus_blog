@@ -59,10 +59,10 @@ def heatmap_func(df):
     df_sampled = df2.iloc[::15]
 
     sport_colors = {
-        "biking": "rgba(0, 0, 255, 0.4)",      
-        "hiking": "rgba(255, 0, 0, 0.8)",        
-        "skitour": "rgba(0, 255, 0, 0.8)",  
-        "other": "rgba(255, 165, 0, 0.8)"     
+        "biking": "rgba(0, 0, 255, 0.4)",
+        "hiking": "rgba(255, 0, 0, 0.8)",
+        "skitour": "rgba(0, 255, 0, 0.8)",
+        "other": "rgba(255, 165, 0, 0.8)"
     }
 
     hm = folium.Map(location=[(LAT_MIN + LAT_MAX) / 2, (LON_MIN + LON_MAX) / 2],
