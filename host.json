@@ -12,7 +12,16 @@
     "id": "Microsoft.Azure.Functions.ExtensionBundle",
     "version": "[4.*, 5.0.0)"
   },
+  "extensions": {
+    "queues": {
+      "batchSize": 1, 
+      "newBatchThreshold": 1, 
+      "maxPollingInterval": "00:00:30"
+    }
+  },
   "concurrency": {
-    "MaxConcurrentCalls": 1
+    "dynamicConcurrencyEnabled": false, 
+    "maxConcurrentActivityFunctions": 1, 
+    "maxConcurrentOrchestratorFunctions": 1
   }
 }
