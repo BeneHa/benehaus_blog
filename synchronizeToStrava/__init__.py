@@ -30,7 +30,7 @@ def check_request_exception(r, success_log:str):
     if str(r.status_code)[0] == "2":
         logging.info(success_log)
     else:
-        raise Exception(f"{r.reason}, {r.text}")
+        raise Exception(f"{r.reason}, {r.text}, {r.json()}")
 
 def translate_sport(komoot_sport:str):
     # Translate sports category
@@ -49,15 +49,15 @@ def main(myblob: func.InputStream) -> None:
     blob_client = BlobServiceClient(os.environ['storage_account_name'], credential=default_credential)
     container_client = blob_client.get_container_client(container="komootdata")
 
-    file_path = myblob.name.replace("komootdata/", "")
-    route = json.loads(container_client.download_blob(file_path).readall())
-
-    # Read strava information from key-vault backed env secrets
     strava_access_token, strava_refresh_token = get_strava_token(os.environ["strava_userid"], os.environ["strava_client_secret"], os.environ["strava_refresh_token"])
+    # Read strava information from key-vault backed env secrets
     # Write the refresh token to the key vault so the next run of this function can use it
     secret_client = SecretClient(vault_url=os.environ["key_vault_url"], credential=default_credential)
     secret_client.set_secret("strava-refresh-token", strava_refresh_token)
 
+
+    file_path = myblob.name.replace("komootdata/", "")
+    route = json.loads(container_client.download_blob(file_path).readall())
 
     # Create a new GPX track
     gpx = gpxpy.gpx.GPX()
@@ -97,14 +97,14 @@ def main(myblob: func.InputStream) -> None:
     }
     r = requests.post(f"https://www.strava.com/api/v3/uploads", headers=headers, params=params, files=files)
     strava_id_upload = r.json()["id"]
-    check_request_exception(r, "Completed tour upload.")
-
+    check_request_exception(r, f"Completed tour upload for upload ID {strava_id_upload}.")
+    
     # Get activity id
-    time.sleep(5) # Activity in strava needs some time to be ready
+    time.sleep(10) # Activity in strava needs some time to be ready
     r_id = requests.get(f"https://www.strava.com/api/v3/uploads/{strava_id_upload}", headers=headers)
     check_request_exception(r_id, "Activity ID fetched.")
     strava_id_activity = r_id.json()["activity_id"]
-
+    response_error = r_id.json()["error"]
 
     # Update relevant details
     komoot_route_id = route["id"]
@@ -114,4 +114,4 @@ def main(myblob: func.InputStream) -> None:
     }
     r_details = requests.put(f"https://www.strava.com/api/v3/activities/{strava_id_activity}", headers=headers, params=params)
 
-    check_request_exception(r_details, "Completed tour details.")
+    check_request_exception(r_details, "Completed tour details for activity ID {strava_id_activity}.")
