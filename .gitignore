@@ -19,3 +19,5 @@ __azurite*
 
 *.tfstate*
 *.terraform*
+
+*__.json*
