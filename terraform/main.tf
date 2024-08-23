@@ -151,7 +151,7 @@ resource "azurerm_linux_function_app" "this" {
 
 
   lifecycle {
-    ignore_changes = [ app_settings.WEBSITE_RUN_FROM_PACKAGE, app_settings.WEBSITE_ENABLE_SYNC_UPDATE_SITE, tags, daily_memory_time_quota ]
+    ignore_changes = [ app_settings, tags, daily_memory_time_quota ]
   }
 }
 
@@ -198,3 +198,26 @@ resource "azurerm_role_assignment" "storage_sp" {
     principal_id = local.sp_id
     role_definition_name = "Storage Blob Data Contributor"
 }
+
+resource "azurerm_cdn_frontdoor_profile" "this" {
+  name                = "benehaus-blog-cdn"
+  resource_group_name = azurerm_resource_group.this.name
+  sku_name            = "Standard_AzureFrontDoor"
+  response_timeout_seconds = 120
+}
+
+# resource "azurerm_cdn_frontdoor_endpoint" "this" {
+#   name                     = "benehausblogendpoint"
+#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.this.id
+# }
+
+# resource "azurerm_cdn_frontdoor_custom_domain" "this" {
+#   name                     = "benehausblogendpoint"
+#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.this.id
+#   host_name                = "www.bene.haus"
+
+#   tls {
+#     certificate_type    = "ManagedCertificate"
+#     minimum_tls_version = "TLS12"
+#   }
+# }
