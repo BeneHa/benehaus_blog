@@ -102,6 +102,7 @@ def barplot_func(df):
 
     df_dist['year_month'] = df_dist['date'].dt.normalize().map(MonthBegin().rollback)
     df_dist['year_month'] = df_dist["year_month"].astype(str).str.slice(0,7)
+    df_dist = df_dist[df_dist['sport'] == 'biking'] # barplot is only for biking
 
     df_dist["distance"] = df_dist["distance"] / 1000
     df_grouped = df_dist.groupby(["year_month"], dropna=False)[["distance", "elevation_up"]].sum().reset_index()

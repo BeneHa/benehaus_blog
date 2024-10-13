@@ -110,7 +110,7 @@ def main(myblob: func.InputStream) -> None:
     komoot_route_id = route["id"]
     params = {
         "type": translate_sport(route["sport"]),
-        "description": f"Automatically synched from komoot, link: https://www.komoot.com/de-de/tour/{komoot_route_id}"
+        "description": f"Automatically synched from komoot"
     }
     r_details = requests.put(f"https://www.strava.com/api/v3/activities/{strava_id_activity}", headers=headers, params=params)
 
