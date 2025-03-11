@@ -33,7 +33,7 @@ resource "azurerm_log_analytics_workspace" "this" {
 
 resource "azurerm_application_insights" "this" {
   name                = "behablogfunction"
-  location            = "westeurope"
+  location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   application_type    = "web"
   sampling_percentage = 0
@@ -43,7 +43,7 @@ resource "azurerm_application_insights" "this" {
 resource "azurerm_service_plan" "this" {
   name                = "ASP-benehausblogrg-af9b"
   resource_group_name = azurerm_resource_group.this.name
-  location            = "westeurope"
+  location            = azurerm_resource_group.this.location
   os_type             = "Linux"
   sku_name            = "Y1"
 }
@@ -116,7 +116,7 @@ resource "azurerm_key_vault_secret" "strava_refresh_token" {
 resource "azurerm_linux_function_app" "this" {
   name                = "behablogfunction"
   resource_group_name = azurerm_resource_group.this.name
-  location            = "westeurope"
+  location            = azurerm_resource_group.this.location
   daily_memory_time_quota = 1
 
   identity {
@@ -204,6 +204,9 @@ resource "azurerm_cdn_frontdoor_profile" "this" {
   resource_group_name = azurerm_resource_group.this.name
   sku_name            = "Standard_AzureFrontDoor"
   response_timeout_seconds = 120
+  lifecycle {
+    ignore_changes = [ sku_name ]
+  }
 }
 
 # resource "azurerm_cdn_frontdoor_endpoint" "this" {

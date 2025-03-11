@@ -1,4 +1,4 @@
 [tools]
-pre-commit = 'prefix:3'
+pre-commit = 'prefix:4'
 azure-cli = 'prefix:2'
-python = "3.10.11"
+terraform = "prefix:1"
