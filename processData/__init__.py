@@ -50,11 +50,6 @@ def heatmap_func(df):
 
     df2.pop("coordinates")
 
-    LAT_MIN = 47.7
-    LAT_MAX = 48.55
-    LON_MIN = 10.75
-    LON_MAX = 12.25
-
     # sampling to reduce amount of points
     df_sampled = df2.iloc[::15]
 
@@ -65,7 +60,7 @@ def heatmap_func(df):
         "other": "rgba(255, 165, 0, 0.8)"
     }
 
-    hm = folium.Map(location=[(LAT_MIN + LAT_MAX) / 2, (LON_MIN + LON_MAX) / 2],
+    hm = folium.Map(location=[44.81, 20.39],
                     tiles='openstreetmap',
                     zoom_start=10)
 
@@ -88,7 +83,7 @@ def heatmap_func(df):
 
 
 def barplot_func(df):
-    df_dist = df[df["date"].str.contains(r"2022|2023|2024|2025")]
+    df_dist = df[df["date"].str.contains(r"2022|2023|2024|2025|2026")]
     df_dist.pop("coordinates")
     df_dist["date"] = df_dist["date"].apply(pd.to_datetime)
 
