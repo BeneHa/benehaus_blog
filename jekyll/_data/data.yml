@@ -1,18 +1,17 @@
 ---
 sidebar       :
-  about: true   # set to False or comment line if you want to remove the "how to use?" in the sidebar
-  education: true   # set to False if you want education in main section instead of in sidebar
+  about: true 
+  education: true  
 
     # Profile information
   name: Benedikt Häuser
-  tagline: Azure Cloud Architect
+  tagline: Azure Cloud Architect / DevOps engineer
   avatar: cv/small_quadrat.jpg
 
     # Sidebar links
   email: benedikt.haeuser@outlook.com
   citizenship: German
   linkedin: benedikt-häuser-455216175
-  certly: benedikt-hauser
   github: BeneHa
   komoot:
     userid: '402325220843'
@@ -25,24 +24,25 @@ sidebar       :
     - idiom: English
       level: Professional
 
+    - idiom: Serbian
+      level: Beginner
+
   interests:
     - item: Climbing
       link:
-    - item: Road biking
-      link:
-    - item: Environmental protection
+    - item: Biking, gravel and road
       link:
     - item: Video games
       link:
 
 career-profile:
-  title: Career Profile
+  title: Intro
   summary: |
-    I a am Munich-based IT guy specializing in Azure, Infrastructure as Code and formerly Data Engineering. With more than
-    5 years of experience across different industries I have a good overview of typical
+    I a am Belgrade-based IT guy specializing in Azure, Infrastructure as Code and formerly Data Engineering. With more than
+    8 years of experience across different industries I have a good overview of typical
     use cases, challenges and how to solve them.
     In my free time I like to be outdoors, read, learn some new technology or play video games.
-    On this blog I write whatever comes to my mind, but I am not sure yet how often I will write something here.
+    On this blog I write whatever comes to my mind, but not very frequently.
 
 bike-heatmap  :
   title: Bike and sports Heatmap
@@ -61,8 +61,13 @@ education     :
     time: 2012 - 2015
 
 experiences   :
+  - role: Senior Consultant Azure
+    time: 2025 - Present
+    company: STI Consulting
+    details: |
+      Devops and Azure infrastructure for multiple data teams.
   - role: Azure Cloud Architect
-    time: 2023 - Present
+    time: 2023 - 2025
     company: SWM, Munich
     details: |
       Implement infrastructure in Azure for teams to run and migrate their workloads in the cloud.
@@ -89,15 +94,6 @@ experiences   :
     details: |
       Analyze onboard vehicle telemetry data in R and enrich it with Open Data
       for better understanding of vehicle driving patterns and environment conditions.
-
-projects      :
-  title: Projects
-  intro: >
-    In my free time I try to do something interesting and worthwile.
-  assignments:
-    - title: Cooperative Rieselbar
-      link: https://www.rieselbar.de/lang/en/index.html
-      tagline: We try to open a zero packaging store in the north of Munich.
 
 skills        :
   title: Skills &amp; Proficiency
