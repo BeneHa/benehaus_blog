@@ -1,5 +1,5 @@
 ---
-title: "Handling Snowflake allowlists with terraform"
+title: "Handling Snowflake network rules with terraform"
 image: assets/images/blogposts/2025-07-30-snowflake-firewall/firewall.jpg
 categories: [ Azure, Snowflake ]
 ---
