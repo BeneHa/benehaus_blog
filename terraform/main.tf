@@ -124,7 +124,6 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   storage_account_name       = azurerm_storage_account.this.name
-  #storage_account_access_key = azurerm_storage_account.this.primary_access_key
   storage_uses_managed_identity = true
   service_plan_id            = azurerm_service_plan.this.id
 
@@ -151,7 +150,7 @@ resource "azurerm_linux_function_app" "this" {
 
 
   lifecycle {
-    ignore_changes = [ app_settings, tags, daily_memory_time_quota ]
+    #ignore_changes = [ app_settings, tags, daily_memory_time_quota ]
   }
 }
 
