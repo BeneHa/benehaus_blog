@@ -141,7 +141,8 @@ def main(mytimer: func.TimerRequest) -> None:
     tours = api.fetch_tours()
     missing_tours = {k:v for (k,v) in tours.items() if
                      str(k) not in saved_tours and
-                     "tour_recorded" in v}
+                     "tour_recorded" in v and
+                     ("jogging" not in v)}
     for t in missing_tours:
         tour_details = api.fetch_tour(str(t))
 
