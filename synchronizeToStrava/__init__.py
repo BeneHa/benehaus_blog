@@ -40,6 +40,10 @@ def translate_sport(komoot_sport:str):
         return "Hike"
     elif komoot_sport in ["skitour"]:
         return "AlpineSki"
+    elif komoot_sport in ["jogging"]:
+        return "Run"
+    else:
+        return "Run"
 
 
 def main(myblob: func.InputStream) -> None:
