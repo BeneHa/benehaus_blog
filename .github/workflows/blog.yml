@@ -31,6 +31,7 @@ jobs:
 
           cd jekyll
           gem install jekyll bundler
+          bundle config set frozen false
           bundle install
 
           npm install -g @azure/static-web-apps-cli
