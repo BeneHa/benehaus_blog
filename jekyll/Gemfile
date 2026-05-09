@@ -16,3 +16,4 @@ group :jekyll_plugins do
     gem 'jekyll-paginate'
     gem 'jekyll-seo-tag'
 end
+gem "base64", "~> 0.2.0"
