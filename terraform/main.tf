@@ -16,11 +16,6 @@ resource "azurerm_storage_account" "this" {
     account_tier = "Standard"
     location = "germanywestcentral"
     account_replication_type = "LRS"
-
-    static_website {
-      error_404_document = "404.html"
-      index_document = "index.html"
-    }
 }
 
 resource "azurerm_log_analytics_workspace" "this" {
