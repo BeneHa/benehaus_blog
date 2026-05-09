@@ -40,5 +40,5 @@ jobs:
           jekyll build
           #sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
           
-          export SWA_CLI_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list --name webpageswa --query "properties.apiKey")
+          export SWA_CLI_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list --name webpageswa --query "properties.apiKey" -o tsv)
           swa deploy --env production
