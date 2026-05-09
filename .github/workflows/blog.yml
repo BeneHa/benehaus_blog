@@ -17,12 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: helaili/jekyll-action@v2
-        with:
-          jekyll_src: jekyll
-          target_path: _site
-          build_dir: _site
-          build_only: 'true'
       - name: Azure Login
         uses: Azure/login@v2
         with:
@@ -31,7 +25,13 @@ jobs:
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
       - name: upload
         run: |
-          sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
+          sudo apt-get install ruby-full build-essential zlib1g-dev
+          gem install jekyll bundler
           npm install -g @azure/static-web-apps-cli
+
+          cd jekyll
+          jekyll build
+          #sudo chmod -R 777 ~/work/benehaus_blog/benehaus_blog/jekyll/_site/_site/
+          
           export SWA_CLI_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list --name webpageswa --query "properties.apiKey")
           swa deploy --env production
