@@ -26,6 +26,8 @@ jobs:
       - name: upload
         run: |
           sudo apt-get install ruby-full build-essential zlib1g-dev
+          export GEM_HOME="$HOME/gems"
+          export PATH="$HOME/gems/bin:$PATH"
           gem install jekyll bundler
           npm install -g @azure/static-web-apps-cli
 
