@@ -208,18 +208,10 @@ resource "azurerm_cdn_frontdoor_profile" "this" {
   }
 }
 
-# resource "azurerm_cdn_frontdoor_endpoint" "this" {
-#   name                     = "benehausblogendpoint"
-#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.this.id
-# }
-
-# resource "azurerm_cdn_frontdoor_custom_domain" "this" {
-#   name                     = "benehausblogendpoint"
-#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.this.id
-#   host_name                = "www.bene.haus"
-
-#   tls {
-#     certificate_type    = "ManagedCertificate"
-#     minimum_tls_version = "TLS12"
-#   }
-# }
+resource "azurerm_static_web_app" "this" {
+  name                = "webpageswa"
+  resource_group_name = azurerm_resource_group.this.name
+  location            = "westeurope"
+  sku_size = "Free"
+  sku_tier = "Free"
+}
