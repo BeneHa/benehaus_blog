@@ -83,108 +83,114 @@ def heatmap_func(df):
 
 
 def barplot_func(df):
-    df_dist = df[df["date"].str.contains(r"2022|2023|2024|2025|2026")]
-    df_dist.pop("coordinates")
-    df_dist["date"] = df_dist["date"].apply(pd.to_datetime)
+        # Filter and prepare distances for recent years
+        df_dist = df[df["date"].str.contains(r"2022|2023|2024|2025|2026")].copy()
+        if "coordinates" in df_dist.columns:
+                df_dist.pop("coordinates")
+        df_dist["date"] = df_dist["date"].apply(pd.to_datetime)
 
-    # fill empty months
-    max_date = max(df_dist["date"])
-    for year in range(2022, max_date.year):
-        for month in ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]:
-            df_new = pd.DataFrame([[pd.to_datetime(f'{year}-{month}-01 10:00:00.0000000000', format='%Y-%m-%d %H:%M:%S.%f', utc=True), "0", 0, "0", "bike", 0]],
-                                columns=["date", "name", "distance", "duration", "sport", "elevation_up"])
-            df_dist = pd.concat([df_dist, df_new])
+        # ensure at least one row to avoid errors
+        if df_dist.empty:
+                df_grouped = pd.DataFrame({"year_month": [], "distance": [], "elevation_up": []})
+        else:
+                # fill empty months up to the last available year
+                max_date = max(df_dist["date"]) if not df_dist.empty else pd.to_datetime("2022-01-01")
+                rows = []
+                for year in range(2022, max_date.year + 1):
+                        for month in range(1, 13):
+                                rows.append(pd.Timestamp(year=year, month=month, day=1, hour=10))
+                filler = pd.DataFrame({"date": rows, "name": None, "distance": 0, "duration": 0, "sport": "bike", "elevation_up": 0})
+                df_dist = pd.concat([df_dist, filler], ignore_index=True)
 
-    df_dist['year_month'] = df_dist['date'].dt.normalize().map(MonthBegin().rollback)
-    df_dist['year_month'] = df_dist["year_month"].astype(str).str.slice(0,7)
-    df_dist = df_dist[df_dist['sport'] == 'biking'] # barplot is only for biking
+                df_dist['year_month'] = df_dist['date'].dt.to_period('M').astype(str)
+                df_dist = df_dist[df_dist['sport'] == 'biking']
+                df_dist["distance"] = df_dist["distance"] / 1000
+                df_grouped = df_dist.groupby(["year_month"], dropna=False)[["distance", "elevation_up"]].sum().reset_index()
+                df_grouped.distance = df_grouped.distance.round(0)
+                df_grouped.elevation_up = df_grouped.elevation_up.round(0)
 
-    df_dist["distance"] = df_dist["distance"] / 1000
-    df_grouped = df_dist.groupby(["year_month"], dropna=False)[["distance", "elevation_up"]].sum().reset_index()
-    df_grouped.distance = df_grouped.distance.round(0)
-    df_grouped.elevation_up = df_grouped.elevation_up.round(0)
+        # Generate a standalone HTML page with Chart.js
+        x_vals = json.dumps(df_grouped["year_month"].tolist())
+        y_vals = json.dumps(df_grouped["distance"].tolist())
+        alt_vals = json.dumps(df_grouped["elevation_up"].tolist())
 
-    js_string = f"""// automatically generated file, do not change here!
-        var xValues = {df_grouped["year_month"].tolist()};
-        var yValues = {df_grouped["distance"].tolist()};
-        var altValues= {df_grouped["elevation_up"].tolist()};
-        var barColorDist ="blue";
-        var barColorAlt ="grey";
+        html = f"""<!doctype html>
+<html lang=\"en\"> 
+<head>
+    <meta charset=\"utf-8\"> 
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> 
+    <title>Bike Distance Barplot</title>
+    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background:#fff }}
+        .container {{ max-width: 1000px; margin: auto }}
+        canvas {{ width:100% !important; height:400px !important }}
+    </style>
+</head>
+<body>
+    <div class=\"container\">
+        <h3>Monthly Biking Distance</h3>
+        <canvas id=\"barplot\"></canvas>
+    </div>
+    <script>
+        var xValues = {x_vals};
+        var yValues = {y_vals};
+        var altValues = {alt_vals};
 
-        new Chart("barplot", {{
-        type: "bar",
-        data: {{
-            labels: xValues,
-            datasets: [{{
-                label: 'Distance',
-                backgroundColor: barColorDist,
-                data: yValues,
-                yAxisID: 'y-axis-distance'
-            }},
-            {{
-                label: 'Altitude',
-                backgroundColor: barColorAlt,
-                data: altValues.map(value => value / 10),
-                yAxisID: 'y-axis-altitude'
-            }}]
-        }},
-        options: {{
-            legend: {{display: true}},
-            title: {{
-            display: false,
-            }},
-            tooltips: {{
-                callbacks: {{
-                    label: function(tooltipItem, data) {{
-                        var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                        var value = tooltipItem.yLabel;
-                        if (tooltipItem.datasetIndex === 1) {{
-                            value = value * 10; // Convert scaled value back to real value
-                            return datasetLabel + ': ' + value + ' m';
-                        }} else {{
-                            return datasetLabel + ': ' + value + ' km';
-                        }}
-                    }}
-                }}
-            }},
-            scales: {{
-                yAxes: [{{
-                    id: 'y-axis-distance',
-                    type: 'linear',
-                    position: 'left',
-                    ticks: {{
-                        beginAtZero: true,
-                        callback: function(value, index, values) {{
-                            return value + ' km';
-                        }}
-                    }},
-                    scaleLabel: {{
-                        display: true,
-                        labelString: 'Distance (km)'
-                    }}
-                }}, {{
-                    id: 'y-axis-altitude',
-                    type: 'linear',
-                    position: 'right',
-                    ticks: {{
-                        beginAtZero: true,
-                        callback: function(value, index, values) {{
-                            return value * 10 + ' m';
-                        }}
-                    }},
-                    scaleLabel: {{
-                        display: true,
-                        labelString: 'Altitude (m)'
-                    }}
-                }}],
-                xAxes: [{{
-                    barPercentage: 1.0,
-                categoryPercentage: 0.5
-                }}]
-            }}
-        }} }});
-    """
-    return js_string
+        new Chart(document.getElementById('barplot').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: xValues,
+                datasets: [
+                    {
+                        label: 'Distance (km)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                        data: yValues,
+                        yAxisID: 'y-axis-distance'
+                    },
+                    {
+                        label: 'Altitude (m)',
+                        backgroundColor: 'rgba(201, 203, 207, 0.8)',
+                        data: altValues.map(v => v / 10),
+                        yAxisID: 'y-axis-altitude'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [
+                        {
+                            id: 'y-axis-distance',
+                            type: 'linear',
+                            position: 'left',
+                            ticks: { beginAtZero: true }
+                        },
+                        {
+                            id: 'y-axis-altitude',
+                            type: 'linear',
+                            position: 'right',
+                            ticks: { beginAtZero: true, callback: function(v){ return v * 10 } }
+                        }
+                    ]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                            var value = tooltipItem.yLabel;
+                            if (tooltipItem.datasetIndex === 1) return label + ': ' + (value * 10) + ' m';
+                            return label + ': ' + value + ' km';
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+"""
+        return html
 
 
 def main(myblob: func.InputStream) -> None:
@@ -204,13 +210,13 @@ def main(myblob: func.InputStream) -> None:
                                     overwrite=True, content_settings=ContentSettings(content_type="text/html"))
 
     # Distance bar diagram
-    plt = barplot_func(df.copy())
+    barplot_html = barplot_func(df.copy())
 
     map_bytes_io = io.BytesIO()
     StreamWriter = codecs.getwriter('utf-8')
     wrapper_file = StreamWriter(map_bytes_io)
-    print(plt, file=wrapper_file)
+    print(barplot_html, file=wrapper_file)
 
-    container_client = get_blob_client("$web")
-    container_client.upload_blob("assets/js/barplot.js",  map_bytes_io.getvalue(),
-                                   overwrite=True)
+    container_client = get_blob_client(container="komootplots")
+    container_client.upload_blob("bike_barplot.html", map_bytes_io.getvalue(),
+                                   overwrite=True, content_settings=ContentSettings(content_type="text/html"))
