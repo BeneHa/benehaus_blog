@@ -14,7 +14,24 @@
     {{ bike-barplot.summary | markdownify }}
   </div><!--//summary-->
 
-  <iframe src="https://benehausblogstorage.blob.core.windows.net/komootplots/bike_barplot.html" style="width:100%;height:30vh"></iframe>
+  <div class="iframe-responsive">
+    <iframe src="https://benehausblogstorage.blob.core.windows.net/komootplots/bike_barplot.html" allowfullscreen loading="lazy"></iframe>
+  </div>
+
+  <style>
+    /* Use a computed height that caps by viewport height so ultrawide screens stay reasonable */
+    .iframe-responsive{width:100%;display:flex;justify-content:center}
+    .iframe-responsive iframe{
+      width:100%;
+      max-width:1400px;
+      height: min(60vh, calc(100vw * 9 / 16));
+      border:0;
+      display:block;
+    }
+    @media (max-width:600px){
+      .iframe-responsive iframe{height: min(70vh, calc(100vw * 3 / 4));}
+    }
+  </style>
 
 </section><!--//section-->
 {% endif %}

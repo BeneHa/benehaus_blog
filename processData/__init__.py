@@ -126,9 +126,9 @@ def barplot_func(df):
     <title>Bike Distance Barplot</title>
     <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>
     <style>
-        body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background:#fff }}
-        .container {{ max-width: 1000px; margin: auto }}
-        canvas {{ width:100% !important; height:400px !important }}
+        html, body {{ height:100%; margin:0; padding:0; background:#fff; font-family: Arial, sans-serif }}
+        .container {{ max-width: 1000px; margin: 10px auto; height: calc(100vh - 40px); box-sizing: border-box }}
+        canvas {{ width:100% !important; height: calc(100vh - 120px) !important }}
     </style>
 </head>
 <body>
