@@ -35,14 +35,23 @@ jobs       :
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt --target=".python_packages/lib/site-packages"
-          rm -rf jekyll _site vendor node_modules .github .git || true
+          rm -rf jekyll _site terraform vendor node_modules .github .git || true
+
+      - name: Create function deployment package
+        shell: bash
+        run: |
+          # include only function app files and installed packages
+          PKG=function_package.zip
+          rm -f $PKG
+          zip -r $PKG host.json requirements.txt getData processData synchronizeToStrava .python_packages || true
+          echo "Package contents:" && unzip -l $PKG | sed -n '1,200p'
 
       - name: Run Azure Functions Action
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: behablogfunction
-          package: .
+          package: function_package.zip
           scm-do-build-during-deployment: true
           enable-oryx-build: true
 
