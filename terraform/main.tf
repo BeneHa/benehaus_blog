@@ -193,16 +193,6 @@ resource "azurerm_role_assignment" "storage_sp" {
     role_definition_name = "Storage Blob Data Contributor"
 }
 
-resource "azurerm_cdn_frontdoor_profile" "this" {
-  name                = "benehaus-blog-cdn"
-  resource_group_name = azurerm_resource_group.this.name
-  sku_name            = "Standard_AzureFrontDoor"
-  response_timeout_seconds = 120
-  lifecycle {
-    ignore_changes = [ sku_name ]
-  }
-}
-
 resource "azurerm_static_web_app" "this" {
   name                = "webpageswa"
   resource_group_name = azurerm_resource_group.this.name

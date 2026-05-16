@@ -87,7 +87,8 @@ def barplot_func(df):
         df_dist = df[df["date"].str.contains(r"2022|2023|2024|2025|2026")].copy()
         if "coordinates" in df_dist.columns:
                 df_dist.pop("coordinates")
-        df_dist["date"] = df_dist["date"].apply(pd.to_datetime)
+        # robustly parse dates, coercing invalid values to NaT
+        df_dist["date"] = pd.to_datetime(df_dist["date"], errors='coerce')
 
         # ensure at least one row to avoid errors
         if df_dist.empty:
@@ -99,8 +100,12 @@ def barplot_func(df):
                 for year in range(2022, max_date.year + 1):
                         for month in range(1, 13):
                                 rows.append(pd.Timestamp(year=year, month=month, day=1, hour=10))
-                filler = pd.DataFrame({"date": rows, "name": None, "distance": 0, "duration": 0, "sport": "bike", "elevation_up": 0})
+                filler = pd.DataFrame({"date": rows, "name": None, "distance": 0, "duration": 0, "sport": "biking", "elevation_up": 0})
                 df_dist = pd.concat([df_dist, filler], ignore_index=True)
+
+                # ensure the combined column is datetimelike and drop any rows where parsing failed
+                df_dist['date'] = pd.to_datetime(df_dist['date'], errors='coerce')
+                df_dist = df_dist.dropna(subset=['date'])
 
                 df_dist['year_month'] = df_dist['date'].dt.to_period('M').astype(str)
                 df_dist = df_dist[df_dist['sport'] == 'biking']
@@ -112,9 +117,8 @@ def barplot_func(df):
         # Generate a standalone HTML page with Chart.js
         x_vals = json.dumps(df_grouped["year_month"].tolist())
         y_vals = json.dumps(df_grouped["distance"].tolist())
-        alt_vals = json.dumps(df_grouped["elevation_up"].tolist())
 
-        html = f"""<!doctype html>
+        html = """<!doctype html>
 <html lang=\"en\"> 
 <head>
     <meta charset=\"utf-8\"> 
@@ -129,13 +133,11 @@ def barplot_func(df):
 </head>
 <body>
     <div class=\"container\">
-        <h3>Monthly Biking Distance</h3>
         <canvas id=\"barplot\"></canvas>
     </div>
     <script>
         var xValues = {x_vals};
         var yValues = {y_vals};
-        var altValues = {alt_vals};
 
         new Chart(document.getElementById('barplot').getContext('2d'), {
             type: 'bar',
@@ -147,12 +149,6 @@ def barplot_func(df):
                         backgroundColor: 'rgba(54, 162, 235, 0.8)',
                         data: yValues,
                         yAxisID: 'y-axis-distance'
-                    },
-                    {
-                        label: 'Altitude (m)',
-                        backgroundColor: 'rgba(201, 203, 207, 0.8)',
-                        data: altValues.map(v => v / 10),
-                        yAxisID: 'y-axis-altitude'
                     }
                 ]
             },
@@ -165,12 +161,6 @@ def barplot_func(df):
                             type: 'linear',
                             position: 'left',
                             ticks: { beginAtZero: true }
-                        },
-                        {
-                            id: 'y-axis-altitude',
-                            type: 'linear',
-                            position: 'right',
-                            ticks: { beginAtZero: true, callback: function(v){ return v * 10 } }
                         }
                     ]
                 },
@@ -179,7 +169,6 @@ def barplot_func(df):
                         label: function(tooltipItem, data) {
                             var label = data.datasets[tooltipItem.datasetIndex].label || '';
                             var value = tooltipItem.yLabel;
-                            if (tooltipItem.datasetIndex === 1) return label + ': ' + (value * 10) + ' m';
                             return label + ': ' + value + ' km';
                         }
                     }
@@ -190,6 +179,8 @@ def barplot_func(df):
 </body>
 </html>
 """
+        # replace only the JSON placeholders to avoid f-string brace parsing issues
+        html = html.replace('{x_vals}', x_vals).replace('{y_vals}', y_vals)
         return html
 
 

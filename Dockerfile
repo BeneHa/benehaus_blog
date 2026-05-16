@@ -21,7 +21,12 @@ ENTRYPOINT [ "jekyll" ]
 CMD [ "--help" ]
 
 # build from the image we just built with different metadata
-FROM ghcr.io/bretfisher/jekyll:alpine-stable-20221215120513 as jekyll-serve
+FROM ghcr.io/bretfisher/jekyll:stable-20260414-2a8cdc9 as jekyll-serve
+## Ensure native build tools and bigdecimal are available in this image
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential libgmp-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && gem install bigdecimal --no-document || true
 
 # on every container start, check if Gemfile exists and warn if it's missing
 ENTRYPOINT [ "docker-entrypoint.sh" ]
