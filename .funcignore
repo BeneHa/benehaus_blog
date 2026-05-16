@@ -1,4 +1,20 @@
-.git*
+# Exclude static site sources and other non-function content from deployment
+jekyll/
+_site/
+vendor/
+node_modules/
+.github/
+.git/
+Dockerfile
+Gemfile*
+README.md
+terraform/
+assets/
+__blobstorage__/
+__queuestorage__/
+__azurite_db_*.json
+*.md
+*.log.git*
 .vscode
 __azurite_db*__.json
 __blobstorage__
