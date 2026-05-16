@@ -18,6 +18,12 @@ resource "azurerm_storage_account" "this" {
     account_replication_type = "LRS"
 }
 
+resource "azurerm_storage_container" "this" {
+    name = "function"
+    storage_account_id = azurerm_storage_account.this.id
+    container_access_type = "private"
+}
+
 resource "azurerm_log_analytics_workspace" "this" {
   name                = "lawsbehafunction"
   location            = azurerm_resource_group.this.location
@@ -40,7 +46,7 @@ resource "azurerm_service_plan" "this" {
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
   os_type             = "Linux"
-  sku_name            = "Y1"
+  sku_name            = "FC1"
 }
 
 resource "azurerm_key_vault" "this" {
@@ -108,25 +114,26 @@ resource "azurerm_key_vault_secret" "strava_refresh_token" {
     }
 }
 
-resource "azurerm_linux_function_app" "this" {
+resource "azurerm_function_app_flex_consumption" "this" {
   name                = "behablogfunction"
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
-  daily_memory_time_quota = 1
+
+  storage_container_type      = "blobContainer"
+  storage_container_endpoint  = "${azurerm_storage_account.this.primary_blob_endpoint}${azurerm_storage_container.this.name}"
+  storage_authentication_type = "StorageAccountConnectionString"
+  storage_access_key          = azurerm_storage_account.this.primary_access_key
+  runtime_name                = "python"
+  runtime_version = "3.14"
 
   identity {
     type = "SystemAssigned"
   }
 
-  storage_account_name       = azurerm_storage_account.this.name
-  storage_uses_managed_identity = true
   service_plan_id            = azurerm_service_plan.this.id
 
   site_config {
     application_insights_connection_string = azurerm_application_insights.this.connection_string
-    application_stack {
-      python_version = "3.11"
-    }
   }
 
   app_settings = {
@@ -145,13 +152,12 @@ resource "azurerm_linux_function_app" "this" {
 
 
   lifecycle {
-    #ignore_changes = [ app_settings, tags, daily_memory_time_quota ]
   }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
   name = "diagsettingfunc"
-  target_resource_id = azurerm_linux_function_app.this.id
+  target_resource_id = azurerm_function_app_flex_consumption.this.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
   enabled_log {
     category = "FunctionAppLogs"
@@ -164,26 +170,26 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 # Circle dependency, apply with target on re-create
 resource "azurerm_role_assignment" "storage" {
     scope = azurerm_storage_account.this.id
-    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    principal_id = azurerm_function_app_flex_consumption.this.identity[0].principal_id
     role_definition_name = "Storage Blob Data Owner"
 }
 
 resource "azurerm_role_assignment" "queue" {
     scope = azurerm_storage_account.this.id
-    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    principal_id = azurerm_function_app_flex_consumption.this.identity[0].principal_id
     role_definition_name = "Storage Queue Data Contributor"
 }
 
 resource "azurerm_role_assignment" "owner" {
     scope = azurerm_storage_account.this.id
-    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    principal_id = azurerm_function_app_flex_consumption.this.identity[0].principal_id
     role_definition_name = "Storage Account Contributor"
 }
 
 # Circle dependency, apply with target on re-create
 resource "azurerm_role_assignment" "key_vault" {
     scope = azurerm_key_vault.this.id
-    principal_id = azurerm_linux_function_app.this.identity[0].principal_id
+    principal_id = azurerm_function_app_flex_consumption.this.identity[0].principal_id
     role_definition_name = "Key Vault Secrets Officer"
 }
 
