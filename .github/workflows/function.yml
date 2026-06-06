@@ -19,14 +19,14 @@ jobs       :
     steps:
       - uses: actions/checkout@v4
       - name: Azure Login
-        uses: Azure/login@v2
+        uses: Azure/login@v3
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
           subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
 
