@@ -184,6 +184,7 @@ def barplot_func(df):
         return html
 
 
+@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours",connection="benehausblogstorage")
 def main(myblob: func.InputStream) -> None:
     utc_timestamp = datetime.datetime.now(datetime.UTC).replace(
         tzinfo=datetime.timezone.utc).isoformat()
