@@ -149,10 +149,14 @@ resource "azurerm_function_app_flex_consumption" "this" {
     strava_refresh_token = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_refresh_token.name})"
     key_vault_url = azurerm_key_vault.this.vault_uri
     "AzureWebJobsFeatureFlags"= "EnableWorkerIndexing"
+    "FUNCTIONS_EXTENSION_VERSION" = "~4"
   }
 
 
   lifecycle {
+    ignore_changes = [
+      tags
+    ]
   }
 }
 
