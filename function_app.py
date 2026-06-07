@@ -47,6 +47,7 @@ def translate_sport(komoot_sport:str):
 
 app = func.FunctionApp()
 
+@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours",connection="benehausblogstorage")
 def main_sync_data(myblob: func.InputStream) -> None:
     logging.info(f"Running for new blob {myblob}")
     # blob client, use managed identity
@@ -463,7 +464,9 @@ class KomootApi:
 
         return r.json()
 
-
+@app.timer_trigger(schedule="0 15,18,21,24 * * *", 
+              arg_name="mytimer",
+              run_on_startup=False) 
 def main_get_data(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
