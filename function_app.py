@@ -464,9 +464,11 @@ class KomootApi:
 
         return r.json()
 
-@app.timer_trigger(schedule="0 15,18,21,24 * * *", 
-              arg_name="mytimer",
-              run_on_startup=False) 
+@app.timer_trigger(
+    schedule="0 0 0,15,18,21 * * *",
+    arg_name="mytimer",
+    run_on_startup=False
+)
 def main_get_data(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
