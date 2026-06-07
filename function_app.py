@@ -47,7 +47,7 @@ def translate_sport(komoot_sport:str):
 
 app = func.FunctionApp()
 
-@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours",connection="blobtriggerconnection")
+@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours/{name}",connection="blobtriggerconnection")
 def main_sync_data(myblob: func.InputStream) -> None:
     logging.info(f"Running for new blob {myblob}")
     # blob client, use managed identity
@@ -311,7 +311,7 @@ def barplot_func(df):
         return html
 
 
-@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours",connection="blobtriggerconnection")
+@app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours/{name}",connection="blobtriggerconnection")
 def main_process_data(myblob: func.InputStream) -> None:
     utc_timestamp = datetime.datetime.now(datetime.UTC).replace(
         tzinfo=datetime.timezone.utc).isoformat()
