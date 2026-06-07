@@ -183,6 +183,7 @@ def barplot_func(df):
         html = html.replace('{x_vals}', x_vals).replace('{y_vals}', y_vals)
         return html
 
+app = func.FunctionApp()
 
 @app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours",connection="benehausblogstorage")
 def main(myblob: func.InputStream) -> None:
