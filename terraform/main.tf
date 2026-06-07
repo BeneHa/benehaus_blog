@@ -55,7 +55,7 @@ resource "azurerm_key_vault" "this" {
     location = azurerm_resource_group.this.location
     tenant_id = local.tenant_id
     sku_name = "standard"
-    enable_rbac_authorization = true
+    rbac_authorization_enabled = true
 }
 
 resource "azurerm_role_assignment" "personal" {
@@ -148,6 +148,7 @@ resource "azurerm_function_app_flex_consumption" "this" {
     strava_client_secret = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_client_secret.name})"
     strava_refresh_token = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.this.name};SecretName=${azurerm_key_vault_secret.strava_refresh_token.name})"
     key_vault_url = azurerm_key_vault.this.vault_uri
+    "AzureWebJobsFeatureFlags"= "EnableWorkerIndexing"
   }
 
 

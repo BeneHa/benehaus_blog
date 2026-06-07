@@ -43,7 +43,7 @@ jobs       :
           # include only function app files and installed packages
           PKG=function_package.zip
           rm -f $PKG
-          zip -r $PKG host.json requirements.txt getData processData synchronizeToStrava .python_packages || true
+          zip -r $PKG host.json requirements.txt function_app.py .python_packages || true
           echo "Package contents:" && unzip -l $PKG | sed -n '1,200p'
 
       - name: Run Azure Functions Action
