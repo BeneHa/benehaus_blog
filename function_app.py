@@ -45,6 +45,7 @@ def translate_sport(komoot_sport:str):
     else:
         return "Run"
 
+app = func.FunctionApp()
 
 def main_sync_data(myblob: func.InputStream) -> None:
     logging.info(f"Running for new blob {myblob}")
