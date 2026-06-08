@@ -150,6 +150,10 @@ resource "azurerm_function_app_flex_consumption" "this" {
     key_vault_url = azurerm_key_vault.this.vault_uri
     "AzureWebJobsFeatureFlags"= "EnableWorkerIndexing"
     "FUNCTIONS_EXTENSION_VERSION" = "~4"
+    "AzureWebJobsStorage__accountName" = azurerm_storage_account.this.name
+    "AzureWebJobsStorage__blobServiceUri"  = trimsuffix(azurerm_storage_account.this.primary_blob_endpoint, "/")
+    "AzureWebJobsStorage__queueServiceUri" = trimsuffix(azurerm_storage_account.this.primary_queue_endpoint, "/")
+    "AzureWebJobsStorage__credential" = "managedidentity"
   }
 
 
