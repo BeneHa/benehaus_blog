@@ -78,7 +78,7 @@ def main_sync_data(myblob: func.InputStream) -> None:
     # Add points to the GPX segment
     for point in route["_embedded"]["coordinates"]["items"]:
         # Komoot data has time in miliseconds since start, gpx needs iso datetime per point
-        point_time = start_time + timedelta(milliseconds = point["t"])
+        point_time = start_time + datetime.timedelta(milliseconds = point["t"])
         gpx_segment.points.append(
             gpxpy.gpx.GPXTrackPoint(point["lat"], point["lng"], elevation=point["alt"], time=point_time)
         )
