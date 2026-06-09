@@ -154,7 +154,6 @@ resource "azurerm_function_app_flex_consumption" "this" {
     "AzureWebJobsStorage__blobServiceUri"  = trimsuffix(azurerm_storage_account.this.primary_blob_endpoint, "/")
     "AzureWebJobsStorage__queueServiceUri" = trimsuffix(azurerm_storage_account.this.primary_queue_endpoint, "/")
     "AzureWebJobsStorage__credential" = "managedidentity"
-    "AzureWebJobsStorage" = azurerm_storage_account.this.primary_connection_string
   }
 
 
@@ -162,6 +161,36 @@ resource "azurerm_function_app_flex_consumption" "this" {
     ignore_changes = [
       tags
     ]
+  }
+}
+
+resource "azurerm_eventgrid_event_subscription" "process_data" {
+  name  = "blobeventsubprocess"
+  included_event_types = ["Microsoft.Storage.BlobCreated"]
+  scope = azurerm_storage_account.this.id
+
+  subject_filter {
+    subject_begins_with = "/blobServices/default/containers/komootdata/blobs/tours"
+    subject_ends_with = ".json"
+  }
+  webhook_endpoint {
+    url = "https://${azurerm_function_app_flex_consumption.this.default_hostname}/runtime/webhooks/blobs?functionName=Host.Functions.main_process_data&code=${data.azurerm_function_app_host_keys.this.primary_key}"
+    max_events_per_batch = 1
+  }
+}
+
+resource "azurerm_eventgrid_event_subscription" "sync_data" {
+  name  = "blobeventsubsync"
+  included_event_types = ["Microsoft.Storage.BlobCreated"]
+  scope = azurerm_storage_account.this.id
+
+  subject_filter {
+    subject_begins_with = "/blobServices/default/containers/komootdata/blobs/tours"
+    subject_ends_with = ".json"
+  }
+  webhook_endpoint {
+    url = "https://${azurerm_function_app_flex_consumption.this.default_hostname}/runtime/webhooks/blobs?functionName=Host.Functions.main_sync_data&code=${data.azurerm_function_app_host_keys.this.primary_key}"
+    max_events_per_batch = 1
   }
 }
 
