@@ -154,6 +154,7 @@ resource "azurerm_function_app_flex_consumption" "this" {
     "AzureWebJobsStorage__blobServiceUri"  = trimsuffix(azurerm_storage_account.this.primary_blob_endpoint, "/")
     "AzureWebJobsStorage__queueServiceUri" = trimsuffix(azurerm_storage_account.this.primary_queue_endpoint, "/")
     "AzureWebJobsStorage__credential" = "managedidentity"
+    "AzureWebJobsStorage" = azurerm_storage_account.this.primary_connection_string
   }
 
 
