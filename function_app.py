@@ -183,7 +183,7 @@ def barplot_func(df):
         html = html.replace('{x_vals}', x_vals).replace('{y_vals}', y_vals)
         return html
 
-
+app = func.FunctionApp()
 @app.blob_trigger(arg_name="myblob", source="EventGrid", path="komootdata/tours/{name}",connection="blobtriggerconnection")
 def main_process_data(myblob: func.InputStream) -> None:
     utc_timestamp = datetime.datetime.now(datetime.UTC).replace(
